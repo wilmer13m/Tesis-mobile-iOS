@@ -33,6 +33,23 @@ class HomeTableViewCell1: UITableViewCell {
             }
             
             circleView.backgroundColor = setting?.color
+            
+            //lenando el label de titulo
+            if let name = setting?.name{
+                if let descripcion = setting?.descripcion{
+                    let attributedText = NSMutableAttributedString(string: name, attributes: [NSFontAttributeName:UIFont.boldSystemFont(ofSize: 18)])
+                    attributedText.append(NSMutableAttributedString(string:"\n \(descripcion)", attributes:[NSFontAttributeName: UIFont.systemFont(ofSize: 14),NSForegroundColorAttributeName:UIColor.black]))
+                
+                    let paragraphStyle = NSMutableParagraphStyle()
+                    paragraphStyle.lineSpacing = 4
+                
+                    attributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.string.characters.count))
+                
+                    labelTitulo.attributedText = attributedText
+                }
+            
+            }
+            
         }
         
     }
@@ -64,22 +81,8 @@ class HomeTableViewCell1: UITableViewCell {
     let labelTitulo : UILabel = {
         
         let label = UILabel()
-        label.numberOfLines = 3
+        label.numberOfLines = 2
         
-        let attributedText = NSMutableAttributedString(string: "Consumos", attributes: [NSFontAttributeName:UIFont.boldSystemFont(ofSize: 18)])
-        attributedText.append(NSMutableAttributedString(string:"\n podra ver todos sus consumos aqui", attributes:[NSFontAttributeName: UIFont.systemFont(ofSize: 14),NSForegroundColorAttributeName:UIColor.black]))
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 4
-        
-        attributedText.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.string.characters.count))
-        
-//        let attachment = NSTextAttachment()
-//        attachment.image = UIImage(named: "global")
-//        attachment.bounds = CGRect(x: 0, y: -2, width: 12, height: 12)
-//        attributedText.append(NSAttributedString(attachment: attachment))
-        
-        label.attributedText = attributedText
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

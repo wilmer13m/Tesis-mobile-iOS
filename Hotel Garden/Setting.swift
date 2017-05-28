@@ -17,11 +17,14 @@ class Setting: NSObject {
     
     var color : UIColor
     
-    init(name : String, imageName : String, color : UIColor) {
+    var descripcion : String
+    
+    init(name : String, imageName : String, color : UIColor, descripcion : String) {
         
         self.name = name
         self.imageName = imageName
         self.color = color
+        self.descripcion = descripcion
     }
     
     

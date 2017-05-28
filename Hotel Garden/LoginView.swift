@@ -80,6 +80,7 @@ class LoginView: UIView {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.textColor = .white
+        textField.isSecureTextEntry = true
         textField.attributedPlaceholder = NSAttributedString(string: "Contraseña",
                                                              attributes: [NSForegroundColorAttributeName: UIColor.white])
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -142,7 +143,7 @@ class LoginView: UIView {
                addConstraint(NSLayoutConstraint(item: passwordTextfield, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 55))
         
         addConstraint(NSLayoutConstraint(item: loginButton, attribute: .centerX, relatedBy: .equal, toItem: userTextField, attribute: .centerX, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: loginButton, attribute: .top, relatedBy: .equal, toItem: passwordTextfield, attribute: .bottom, multiplier: 1, constant: 15))
+        addConstraint(NSLayoutConstraint(item: loginButton, attribute: .top, relatedBy: .equal, toItem: passwordTextfield, attribute: .bottom, multiplier: 1, constant: 30))
         addConstraint(NSLayoutConstraint(item: loginButton, attribute: .leading, relatedBy: .equal, toItem: userTextField, attribute: .leading, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: loginButton, attribute: .trailing, relatedBy: .equal, toItem: userTextField, attribute: .trailing, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: loginButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 55))

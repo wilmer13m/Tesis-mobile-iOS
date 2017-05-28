@@ -17,7 +17,7 @@ class HomeViewController: UITableViewController {
     var header : StretchHeader!
 
     let settings: [Setting] = {
-        return [Setting(name: "Settings",imageName : "consumos",color: UIColor.azul()),Setting(name: "Terms & privacy policy",imageName : "servicios",color: UIColor.verde()),Setting(name: "Send Feedback",imageName : "reservas",color: UIColor.naranjaGarden()),Setting(name: "Help",imageName : "servicios",color: UIColor.morado()),Setting(name: "Switch Account",imageName : "consumos",color: UIColor.azul())]
+        return [Setting(name: "Consumos",imageName : "consumos",color: UIColor.azul(),descripcion: "Revise sus consumos aqui"),Setting(name: "Servicios",imageName : "servicios",color: UIColor.verde(),descripcion:"Informacion de servicios"),Setting(name: "Mantenimientos",imageName : "reservas",color: UIColor.naranjaGarden(),descripcion:"realice ordenes de mantenimiento"),Setting(name: "Galeria",imageName : "servicios",color: UIColor.morado(),descripcion:"conozca nuestras instalaciones")]
     }()
     
     
@@ -35,7 +35,7 @@ class HomeViewController: UITableViewController {
         tableView.separatorStyle = .none
         
         tableView.register(HomeTableViewCell1.self, forCellReuseIdentifier: cellId1)
-        tableView.register(HomeTableViewCell2.self, forCellReuseIdentifier: cellId2)
+       // tableView.register(HomeTableViewCell2.self, forCellReuseIdentifier: cellId2)
         
        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named:"logout")?.withRenderingMode(.alwaysTemplate) , style: .done, target: self, action: #selector(self.logOut))
         navigationItem.rightBarButtonItem?.tintColor = UIColor.white
@@ -53,24 +53,19 @@ class HomeViewController: UITableViewController {
     
     //MARK: TABLEVIEW METHODS DELEGATES
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell1 = tableView.dequeueReusableCell(withIdentifier: cellId1) as! HomeTableViewCell1
-        let cell2 = tableView.dequeueReusableCell(withIdentifier: cellId2) as! HomeTableViewCell2
+      //  let cell2 = tableView.dequeueReusableCell(withIdentifier: cellId2) as! HomeTableViewCell2
         
-            
-        switch indexPath.row {
-        case 0...3:
-            
+        
             cell1.setting = settings[indexPath.row]
             return cell1
             
-        default:
-            return cell2
-        }
+      
         
     }
     

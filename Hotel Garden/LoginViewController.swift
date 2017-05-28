@@ -42,8 +42,17 @@ class LoginViewController: UIViewController {
             
         }else{
         
-            print("llene todos los campos")
-        
+            let alertController = UIAlertController(title: "!Error¡", message: "por favor no dejar campos vacios", preferredStyle: UIAlertControllerStyle.alert)
+            
+            let okAction = UIAlertAction(title: "Ok", style: .default) {
+                (result : UIAlertAction) -> Void in
+                
+            }
+            
+            alertController.addAction(okAction)
+
+            self.present(alertController, animated: true, completion: nil)
+                    
         }
     
     }
