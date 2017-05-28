@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +18,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        //creando la pantalla principal ya q no se usara el storyboard
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.makeKeyAndVisible()
+        
+        //creando el controlador para la vista principal y le embebimos un navigationController
+//        let homeViewController = HomeViewController(style: .plain)
+//        
+//        let  navigationController = UINavigationController(rootViewController: homeViewController)
+        
+        
+        let loginViewController = LoginViewController()
+        //asigando el navigation controller como la vista root
+        window?.rootViewController = loginViewController
+        
+        
+        UINavigationBar.appearance().barTintColor = UIColor.naranjaGarden()
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
+        
+        application.statusBarStyle = .lightContent
+        
+        IQKeyboardManager.sharedManager().enable = true
+
         return true
     }
 
