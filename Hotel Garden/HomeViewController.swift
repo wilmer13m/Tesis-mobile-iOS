@@ -17,7 +17,7 @@ class HomeViewController: UITableViewController {
     var header : StretchHeader!
 
     let settings: [Setting] = {
-        return [Setting(name: "Consumos",imageName : "consumos",color: UIColor.azul(),descripcion: "Revise sus consumos aqui"),Setting(name: "Servicios",imageName : "servicios",color: UIColor.verde(),descripcion:"Informacion de servicios"),Setting(name: "Mantenimientos",imageName : "reservas",color: UIColor.naranjaGarden(),descripcion:"realice ordenes de mantenimiento"),Setting(name: "Galeria",imageName : "servicios",color: UIColor.morado(),descripcion:"conozca nuestras instalaciones")]
+        return [Setting(name: "Consumos",imageName : "consumos",color: UIColor.azul(),descripcion: "Revise sus consumos aqui"),Setting(name: "Servicios",imageName : "servicios",color: UIColor.verde(),descripcion:"Informacion de servicios"),Setting(name: "Mantenimientos",imageName : "reservas",color: UIColor.naranjaGarden(),descripcion:"realice ordenes de mantenimiento"),Setting(name: "Galeria",imageName : "galeria",color: UIColor.morado(),descripcion:"conozca nuestras instalaciones")]
     }()
     
     
@@ -25,10 +25,6 @@ class HomeViewController: UITableViewController {
         super.viewDidLoad()
         
         navigationItem.title = "Home"
-        
-        //Arreglo de tipo Setting que servira como nuestro dataSource
-    
-        
         
         //SETTING TABLEVIEW
         tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
@@ -41,8 +37,6 @@ class HomeViewController: UITableViewController {
         navigationItem.rightBarButtonItem?.tintColor = UIColor.white
         
         setupHeaderView()
-
-        
         
     }
     
@@ -53,36 +47,56 @@ class HomeViewController: UITableViewController {
     
     //MARK: TABLEVIEW METHODS DELEGATES
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return settings.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell1 = tableView.dequeueReusableCell(withIdentifier: cellId1) as! HomeTableViewCell1
-      //  let cell2 = tableView.dequeueReusableCell(withIdentifier: cellId2) as! HomeTableViewCell2
-        
         
             cell1.setting = settings[indexPath.row]
             return cell1
-            
-      
-        
     }
     
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        switch indexPath.row {
-        case 0...3:
-            return 80
-            
-        default:
-            return 60
-        }
+        return 80
     }
     
-//    
-//    //MARK: METODO PARA SETEAR EL HEADER DE LA TABLA
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        switch indexPath.row {
+        case 0:
+            let consumoViewController = ConsumoViewController(style: .plain)
+            self.navigationController?.pushViewController(consumoViewController, animated: true)
+            
+            break
+            
+        case 1:
+            
+            let servicioViewController = ServicioViewController(style: .plain)
+            self.navigationController?.pushViewController(servicioViewController, animated: true)
+
+            break
+            
+            
+        case 2:
+            
+            let mantenimientos = MantenimientosViewController(style: .plain)
+            self.navigationController?.pushViewController(mantenimientos, animated: true)
+            
+            break
+            
+            
+        default:
+            break
+        }
+        
+    }
+
+    
+    //MARK: METODO PARA SETEAR EL HEADER DE LA TABLA
     func setupHeaderView() {
         
         let options = StretchHeaderOptions()

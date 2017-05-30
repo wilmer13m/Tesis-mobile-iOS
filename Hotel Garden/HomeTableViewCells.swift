@@ -49,6 +49,9 @@ class HomeTableViewCell1: UITableViewCell {
                 }
             
             }
+         
+
+            
             
         }
         

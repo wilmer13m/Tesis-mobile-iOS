@@ -13,7 +13,12 @@
 		A509F0561EDA28E900F8AC5D /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A509F0551EDA28E900F8AC5D /* Setting.swift */; };
 		A509F0581EDA3E5600F8AC5D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A509F0571EDA3E5600F8AC5D /* LoginViewController.swift */; };
 		A509F05A1EDA468D00F8AC5D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A509F0591EDA468D00F8AC5D /* LoginView.swift */; };
-		A509F05C1EDA886D00F8AC5D /* logo-web.png in Resources */ = {isa = PBXBuildFile; fileRef = A509F05B1EDA886D00F8AC5D /* logo-web.png */; };
+		A529F72E1EDB8B1A0054BA57 /* ConsumosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A529F72D1EDB8B1A0054BA57 /* ConsumosViewController.swift */; };
+		A529F7301EDB8F140054BA57 /* ServiciosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A529F72F1EDB8F140054BA57 /* ServiciosViewController.swift */; };
+		A529F7321EDB8F960054BA57 /* MantenimientosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A529F7311EDB8F960054BA57 /* MantenimientosViewController.swift */; };
+		A529F7341EDD05370054BA57 /* PreviewConsumoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A529F7331EDD05370054BA57 /* PreviewConsumoTableViewCell.swift */; };
+		A529F7361EDD19C80054BA57 /* DetailConsumoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A529F7351EDD19C80054BA57 /* DetailConsumoTableViewCell.swift */; };
+		A529F73A1EDD1ADD0054BA57 /* DetailConsumoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A529F7391EDD1ADD0054BA57 /* DetailConsumoTableViewController.swift */; };
 		A5ABF8461ED9306F003FA132 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABF8451ED9306F003FA132 /* AppDelegate.swift */; };
 		A5ABF8481ED9306F003FA132 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5ABF8471ED9306F003FA132 /* HomeViewController.swift */; };
 		A5ABF84B1ED9306F003FA132 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5ABF8491ED9306F003FA132 /* Main.storyboard */; };
@@ -54,7 +59,12 @@
 		A509F0551EDA28E900F8AC5D /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		A509F0571EDA3E5600F8AC5D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A509F0591EDA468D00F8AC5D /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		A509F05B1EDA886D00F8AC5D /* logo-web.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-web.png"; sourceTree = "<group>"; };
+		A529F72D1EDB8B1A0054BA57 /* ConsumosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsumosViewController.swift; sourceTree = "<group>"; };
+		A529F72F1EDB8F140054BA57 /* ServiciosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiciosViewController.swift; sourceTree = "<group>"; };
+		A529F7311EDB8F960054BA57 /* MantenimientosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MantenimientosViewController.swift; sourceTree = "<group>"; };
+		A529F7331EDD05370054BA57 /* PreviewConsumoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewConsumoTableViewCell.swift; sourceTree = "<group>"; };
+		A529F7351EDD19C80054BA57 /* DetailConsumoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailConsumoTableViewCell.swift; sourceTree = "<group>"; };
+		A529F7391EDD1ADD0054BA57 /* DetailConsumoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailConsumoTableViewController.swift; sourceTree = "<group>"; };
 		A5ABF8421ED9306F003FA132 /* Hotel Garden.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hotel Garden.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5ABF8451ED9306F003FA132 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A5ABF8471ED9306F003FA132 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -127,9 +137,11 @@
 		A509F04A1EDA017F00F8AC5D /* views */ = {
 			isa = PBXGroup;
 			children = (
+				A529F7351EDD19C80054BA57 /* DetailConsumoTableViewCell.swift */,
 				A5ABF8491ED9306F003FA132 /* Main.storyboard */,
 				A509F04F1EDA027F00F8AC5D /* HomeTableViewCells.swift */,
 				A509F0591EDA468D00F8AC5D /* LoginView.swift */,
+				A529F7331EDD05370054BA57 /* PreviewConsumoTableViewCell.swift */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -137,8 +149,12 @@
 		A509F04B1EDA018E00F8AC5D /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A529F72D1EDB8B1A0054BA57 /* ConsumosViewController.swift */,
+				A529F7391EDD1ADD0054BA57 /* DetailConsumoTableViewController.swift */,
 				A5ABF8471ED9306F003FA132 /* HomeViewController.swift */,
 				A509F0571EDA3E5600F8AC5D /* LoginViewController.swift */,
+				A529F7311EDB8F960054BA57 /* MantenimientosViewController.swift */,
+				A529F72F1EDB8F140054BA57 /* ServiciosViewController.swift */,
 			);
 			name = controllers;
 			sourceTree = "<group>";
@@ -181,7 +197,6 @@
 				A509F04A1EDA017F00F8AC5D /* views */,
 				A509F04B1EDA018E00F8AC5D /* controllers */,
 				A5ABF84F1ED9306F003FA132 /* Assets.xcassets */,
-				A509F05B1EDA886D00F8AC5D /* logo-web.png */,
 				A5ABF8511ED9306F003FA132 /* LaunchScreen.storyboard */,
 				A5ABF8541ED9306F003FA132 /* Info.plist */,
 				A5ABF84C1ED9306F003FA132 /* Hotel_Garden.xcdatamodeld */,
@@ -340,7 +355,6 @@
 				A5ABF8531ED9306F003FA132 /* LaunchScreen.storyboard in Resources */,
 				A5ABF8501ED9306F003FA132 /* Assets.xcassets in Resources */,
 				A5ABF84B1ED9306F003FA132 /* Main.storyboard in Resources */,
-				A509F05C1EDA886D00F8AC5D /* logo-web.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,11 +517,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A529F7361EDD19C80054BA57 /* DetailConsumoTableViewCell.swift in Sources */,
 				A509F0581EDA3E5600F8AC5D /* LoginViewController.swift in Sources */,
 				A509F0501EDA027F00F8AC5D /* HomeTableViewCells.swift in Sources */,
+				A529F7321EDB8F960054BA57 /* MantenimientosViewController.swift in Sources */,
+				A529F7341EDD05370054BA57 /* PreviewConsumoTableViewCell.swift in Sources */,
 				A5ABF8481ED9306F003FA132 /* HomeViewController.swift in Sources */,
 				A509F0561EDA28E900F8AC5D /* Setting.swift in Sources */,
+				A529F73A1EDD1ADD0054BA57 /* DetailConsumoTableViewController.swift in Sources */,
 				A5ABF8461ED9306F003FA132 /* AppDelegate.swift in Sources */,
+				A529F72E1EDB8B1A0054BA57 /* ConsumosViewController.swift in Sources */,
+				A529F7301EDB8F140054BA57 /* ServiciosViewController.swift in Sources */,
 				A5ABF84E1ED9306F003FA132 /* Hotel_Garden.xcdatamodeld in Sources */,
 				A509F05A1EDA468D00F8AC5D /* LoginView.swift in Sources */,
 				A509F04E1EDA01B500F8AC5D /* helpers.swift in Sources */,

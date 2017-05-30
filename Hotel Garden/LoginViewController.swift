@@ -8,20 +8,23 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController,UITextFieldDelegate {
 
     var loginView : LoginView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        //SETTING LOGINVIEW
          loginView = LoginView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
         
         self.view.addSubview(loginView!)
+        loginView?.userTextField.delegate = self
+        loginView?.passwordTextfield.delegate = self
         
         loginView?.loginButton.addTarget(self, action: #selector(makeLogin), for: .touchUpInside)
         
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,6 +32,19 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    //MARK: funcion para ocultar el teclado cuando se haga tap sobre el view
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
+    }
+    
+    
+    //MARK: METODOS DEL TEXTFIELD
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
+    }
     
     //MARK: METODO PARA HACER LOGIN
     func makeLogin(){

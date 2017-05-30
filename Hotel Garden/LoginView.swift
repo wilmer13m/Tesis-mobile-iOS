@@ -53,6 +53,7 @@ class LoginView: UIView {
         textField.textColor = .white
         textField.borderStyle = .roundedRect
         textField.backgroundColor = UIColor.clear
+        textField.returnKeyType = .done
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.layer.borderColor = UIColor(white: 1, alpha: 0.5).cgColor
         textField.leftViewMode = UITextFieldViewMode.always
@@ -68,7 +69,8 @@ class LoginView: UIView {
         image.contentMode = UIViewContentMode.center
         textField.leftView = image
         textField.leftViewMode = UITextFieldViewMode.always
-        
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
         textField.layer.cornerRadius = 5
         textField.layer.borderWidth = 1
 
@@ -89,7 +91,8 @@ class LoginView: UIView {
         textField.layer.masksToBounds = true
         textField.layer.cornerRadius = 5
         textField.layer.borderWidth = 1
-        
+        textField.returnKeyType = .done
+
         let image = UIImageView(image: UIImage(named: "password")?.withRenderingMode(.alwaysTemplate))
         image.tintColor = UIColor.white
         if let size = image.image?.size {

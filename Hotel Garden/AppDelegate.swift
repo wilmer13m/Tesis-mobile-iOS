@@ -24,19 +24,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         //creando el controlador para la vista principal y le embebimos un navigationController
-//        let homeViewController = HomeViewController(style: .plain)
-//        
-//        let  navigationController = UINavigationController(rootViewController: homeViewController)
         
         
         let loginViewController = LoginViewController()
         //asigando el navigation controller como la vista root
         window?.rootViewController = loginViewController
         
-        
+        //setting navbar
         UINavigationBar.appearance().barTintColor = UIColor.naranjaGarden()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
-        
         application.statusBarStyle = .lightContent
         
         IQKeyboardManager.sharedManager().enable = true
