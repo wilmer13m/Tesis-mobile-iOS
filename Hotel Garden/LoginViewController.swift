@@ -54,7 +54,17 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         
             let nav : UINavigationController = UINavigationController(rootViewController: homeViewController as HomeViewController)
         
+            
+            //guardando el client id en el prefs
+            let prefs:UserDefaults = UserDefaults.standard
+            
+            prefs.set(1, forKey: "ID_CLIENTE")
+            prefs.synchronize()
+            
+            
             self.present(nav, animated: true, completion: nil)
+            
+            
             
         }else{
         
@@ -68,6 +78,9 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             alertController.addAction(okAction)
 
             self.present(alertController, animated: true, completion: nil)
+            
+            
+           
                     
         }
     

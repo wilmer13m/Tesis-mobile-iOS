@@ -96,3 +96,68 @@ extension UIImageView
         self.addSubview(blurEffectView)
     }
 }
+
+
+
+extension String {
+
+
+    func reemplazarEspaciosEnBlancoPorBarra() -> String{
+        
+        let x = self
+        
+        var nuevaCadena = String()
+        
+        for char in x.characters{
+            
+            if char == " "{
+                
+                let replace = " | "
+                
+                nuevaCadena = nuevaCadena + String(replace)
+                
+            }
+                
+            else{
+                
+                nuevaCadena = nuevaCadena + String(char)
+                
+            }
+            
+        }
+        
+        return nuevaCadena
+        
+    }
+
+    
+    func reemplazarGuionesPorSlash() -> String{
+        
+        let x = self
+        
+        var nuevaCadena = String()
+        
+        for char in x.characters{
+            
+            if char == "-"{
+                
+                let replace = "/"
+                
+                nuevaCadena = nuevaCadena + String(replace)
+                
+            }
+                
+            else{
+                
+                nuevaCadena = nuevaCadena + String(char)
+                
+            }
+            
+        }
+        
+        return nuevaCadena
+        
+    }
+
+
+}
