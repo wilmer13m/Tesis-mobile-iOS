@@ -1,22 +1,23 @@
 //
-//  CreateMantenimientoViewController.swift
+//  EditMantenimientoViewController.swift
 //  Hotel Garden
 //
-//  Created by Wilmer Mendoza on 4/6/17.
+//  Created by Wilmer Mendoza on 6/6/17.
 //  Copyright © 2017 Wilmer Mendoza. All rights reserved.
 //
 
-
-protocol CrearMantenimientoDelegate {
-    
-    func pasarDataDelegate(x: Int)
-}
-
 import UIKit
 
-class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataSource, UIPickerViewDelegate,UITextViewDelegate,UITextFieldDelegate,SweetAlertDelegate {
+class EditMantenimientoViewController: UITableViewController,UIPickerViewDataSource, UIPickerViewDelegate,UITextViewDelegate,UITextFieldDelegate,SweetAlertDelegate {
 
-    let cellId1 = "cellId1"
+    //var que traigo del controlador anterior
+    var descrip = String()
+    var lugarNombre = String()
+    var lugarId = Int()
+    var idSolicitud = Int()
+    
+    
+    let cellId1 = "cellId"
     let cellId2 = "cellId2"
     let cellId3 = "cellId3"
     
@@ -33,6 +34,7 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
     var myTextField = UITextField()
     
     var fieldText = String()
+    var fieldTextId = Int()
     var myTextview = String()
     
     var field = UITextField()
@@ -41,17 +43,34 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
     var sweetAlert = SweetAlert()
     
     var band = Int()
-
-    var crearMantDelegate : CrearMantenimientoDelegate?
     
+    var crearMantDelegate : CrearMantenimientoDelegate?
 
+    var nombreSitio = String()
+    
+    
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        
+        fetchingLocations()
+        
+        tableView.reloadData()
+        
+        fieldText = String()
+        myTextview = String()
+        print("este es fieldtext: \(fieldText)")
+        print("este es el id: \(idSolicitud)")
+        
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //FETHING LOCATIONS INFO
-        fetchingLocations()
         
+        print("entre al viewdidload")
         sweetAlert.sweetDelegate = self
         
         //SETTING TABLEVIEW
@@ -69,8 +88,11 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
         pickerLocation.dataSource = self
         
         //SETTING NAVBAR
-        navigationItem.title = "Nueva orden"
+        navigationItem.title = "Editar orden"
         navigationController?.navigationBar.tintColor = .white
+        
+        print("la descripcion q pase ES \(descrip) y el id del lugar es: \(lugarId)")
+        
         
     }
 
@@ -79,7 +101,7 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
         // Dispose of any resources that can be recreated.
     }
     
-    
+
     //MARK:METODOS DEL TABLEVIEW
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
@@ -97,26 +119,29 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
             
             myTextField = cell1.textfieldLocation
             field = cell1.textfieldLocation
+            cell1.textfieldLocation.text = nombreSitio
             cell1.textfieldLocation.delegate = self
             cell1.textfieldLocation.inputView = pickerLocation
             return cell1
             
         case 1:
             
-            textView = cell2.descripcionTextview
+            myTextview = cell2.descripcionTextview.text
+            cell2.descripcionTextview.text = descrip
             cell2.descripcionTextview.delegate = self
             return cell2
             
         default:
             
-            cell3.enviarButton.addTarget(self, action: #selector(self.crearMantenimiento), for: .touchUpInside)
+            cell3.enviarButton.setTitle("Editar", for: .normal)
+            cell3.enviarButton.addTarget(self, action: #selector(self.editarMantenimiento), for: .touchUpInside)
             return cell3
         }
         
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
+        
         switch indexPath.row {
         case 0:
             
@@ -129,8 +154,9 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
             
             return 120
         }
-       
+        
     }
+    
     
     
     //MARK: METODOS DEL TEXTVIEW
@@ -163,6 +189,14 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
     }
     
     
+    //MARK: METODOS DEL TEXTFIELD
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        fieldText = textField.text!
+        
+    }
+    
+    
     //MARK:METODOS DEL PICKER
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -171,7 +205,7 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
         return pickerOption.count
-
+        
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -181,19 +215,13 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         myTextField.text = pickerOption[row].0
         
-        fieldText = "\(pickerOption[row].1)"
+        fieldTextId = pickerOption[row].1
     }
     
-    
-    //MARK:METODOS DEL TEXTFIELD
-    func textFieldDidEndEditing(_ textField: UITextField) {
         
-        
-    }
     
     
-    
-    //MARK:FETCHING LOCATIONS
+    //MARK:FETCHING All LOCATIONS
     func fetchingLocations(){
         
         print("entre al fetching")
@@ -248,8 +276,7 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
                     //     print(json)
                     
                     self.locations = [Location]()
-                    
-                    print(json.count)
+                    self.pickerOption.removeAll()
                     
                     for x in json{
                         
@@ -272,8 +299,9 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
                         self.loadingView.hideLoadingView()
                         UIApplication.shared.isNetworkActivityIndicatorVisible = false
                         
-
+                        let locat = self.locations!.filter({$0.id == self.lugarId})
                         
+                        self.nombreSitio = locat[0].nombre
                         
                     })
                     
@@ -290,51 +318,69 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
                 
             }
             
-        }.resume()
+            }.resume()
         
     }
-
+    
     
     func reloadData(){
-    
+        
         fetchingLocations()
-
+        
     }
-    
-    
-    
-    //MARK: METODO PARA CREAR MANTENIMIENTO
-    func crearMantenimiento(){
-        
-        
-        print("toque el boton")
-        
-        let location_id : NSString = fieldText as NSString
-        let estatus : NSString = "Por procesar"
-        let descripcion : NSString = myTextview as NSString
-        let clientId : Int = prefs.integer(forKey: "ID_CLIENTE") as Int
-        
 
-        
-        if validarCampos() == true{
+    
+    
+    //MARK:METODO PARA EDITAR EL REGISTRO
+    func editarMantenimiento(){
+    
+        if  (validarCampos() == true) {
+            
+            var lugar_id = String()
+            var descripPut = String()
+            
+            if fieldText != ""{
+                lugar_id = "\(fieldTextId)"
+            }else{
+                lugar_id = "\(lugarId)"
+            }
+            
+            if myTextview != ""{
+                
+                descripPut = self.myTextview
+            
+            }else{
+                
+                descripPut = descrip
+            
+            }
+            
+            let clientId : Int = prefs.integer(forKey: "ID_CLIENTE") as Int
         
             loadingView.showMenuLoad()
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
+            
+            
+            var request = URLRequest(url: URL(string: "http://localhost:8000/api/clients/\(clientId)/solicitudes/\(idSolicitud)")!)
+            
+            print("http://localhost:8000/api/clients/\(clientId)/solicitudes/\(idSolicitud)")
+            
+            
+            request.httpMethod = "PUT"
+            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "content-type")
+            let postString = "location_id=\(lugar_id)&descripcion=\(descripPut)"
+            request.httpBody = postString.data(using: .ascii)
 
             
-            var request = URLRequest(url: URL(string: "http://localhost:8000/api/clients/\(clientId)/solicitudes")!)
-            request.httpMethod = "POST"
-            let postString = "location_id=\(location_id)&estatus=\(estatus)&descripcion=\(descripcion)"
-            request.httpBody = postString.data(using: .utf8)
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
                 guard let data = data, error == nil else {
                     print("error=\(error!)")
                     return
                 }
-            
+                
                 if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200{           // check for http errors
-                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                print("response = \(response!)")
+                    print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                    print("response = \(response!)")
                     
                     
                     DispatchQueue.main.async(execute: {
@@ -358,7 +404,7 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
                 DispatchQueue.main.async(execute: {
                     UIApplication.shared.isNetworkActivityIndicatorVisible = false
                     self.loadingView.hideLoadingView()
-                    _ = self.sweetAlert.showAlert("Completado!", subTitle: "Su orden de mantenimiento ha sido enviada con exito", style: AlertStyle.success)
+                    _ = self.sweetAlert.showAlert("Completado!", subTitle: "Su orden de mantenimiento ha sido editada con exito", style: AlertStyle.success)
                     
                     let responseString = String(data: data, encoding: .utf8)
                     print("responseString = \(responseString!)")
@@ -371,39 +417,48 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
             
             task.resume()
     
-        }else{
-            
-            loadingView.hideLoadingView()
         
-            let alertController = UIAlertController(title: "Error", message: "Por favor llene todos los campos", preferredStyle: UIAlertControllerStyle.alert)
+        }else{
+        
+            print("no pase alguna validacion")
             
-            let okAction = UIAlertAction(title: "Ok", style: .default) {
-                (result : UIAlertAction) -> Void in
-            }
+            let alert = UIAlertController(title: "¡Ha ocurrido un error!", message:"Debe modificar al menos un campo para completar el proceso de edicion", preferredStyle: UIAlertControllerStyle.alert)
             
-            alertController.addAction(okAction)
-            self.present(alertController, animated: true, completion: nil)
+            alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
+                
+                
+                if self.locations?.count == nil{
+                    //run your function here
+                    
+                    self.mensajeError.showElements()
+                    self.mensajeError.showView()
+                    self.mensajeError.reloadButton.addTarget(self, action: #selector(self.reloadData), for: .touchDown)
+                    self.tableView.isHidden = true
+                }
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
         
         }
-        
     
     }
     
     
-    
     //MARK:METODO PARA VALIDAR QUE LOS CAMPOS NO QUEDEN VACIOS
     func validarCampos() -> Bool{
+        
+        if fieldText != "" || myTextview != ""{
             
-        if fieldText != "" && myTextview != ""{
-                
             return true
         }
-            
+        
         return false
         
     }
     
     
+    
+    //MARK: METODO DEL PROTOCOLO SWEETALERT
     func sweetAlertOkButtonPressed() {
         
         band = 1
@@ -412,8 +467,7 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
         navigationController?.popViewController(animated: true)
         
     }
-    
-    
- 
-}
 
+
+
+}

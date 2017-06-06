@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MantenimientosViewController: UITableViewController {
+class MantenimientosViewController: UITableViewController,CrearMantenimientoDelegate {
 
     let cellId = "cellId"
     
@@ -20,6 +20,35 @@ class MantenimientosViewController: UITableViewController {
     
     let mensajeError = MensajeError(ImageName: "sin_conexion", Titulo: "Oops!", Mensaje: "No hay conexion a internet")
 
+    var bandera = Int()
+    
+    var crearMantenimientoVc = CreateMantenimientoViewController(style: .plain)
+    var editarMantenimientoVc = EditMantenimientoViewController(style: .plain)
+    
+    var locations : [Location]?
+    
+    var dscr = String()
+    var id = Int()
+    var lugarId = Int()
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        fetchingMantenimientos()
+        
+
+        
+        if ((solicitudes?.count) != nil){
+            let index = IndexPath(row: 0, section: 0)
+            tableView.scrollToRow(at: index, at: .top, animated: true)
+        }
+        
+         dscr = String()
+         id = Int()
+         lugarId = Int()
+        
+    }
     
     
     override func viewDidLoad() {
@@ -27,6 +56,7 @@ class MantenimientosViewController: UITableViewController {
 
         self.view.backgroundColor = .white
         
+        crearMantenimientoVc.crearMantDelegate = self
         
         //SETTING TABLEVIEW
         tableView.register(MantenimientoTableViewCell.self, forCellReuseIdentifier: cellId)
@@ -41,8 +71,8 @@ class MantenimientosViewController: UITableViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Atras", style:UIBarButtonItemStyle.plain, target: nil, action: nil)
 
         
-        //FETCHING DATA
-        fetchingMantenimientos()
+//        //FETCHING DATA
+//        fetchingMantenimientos()
         
     }
 
@@ -69,7 +99,8 @@ class MantenimientosViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! MantenimientoTableViewCell
         
-        cell.solicitud = solicitudes?[indexPath.row]
+        
+        cell.solicitud = solicitudes?.reversed()[indexPath.row]
         
         
         return cell
@@ -93,7 +124,49 @@ class MantenimientosViewController: UITableViewController {
         
         
         let editar = UITableViewRowAction(style: .normal, title: "Editar") { action, index in
-            print("favorite button tapped")
+            print("editar button tapped")
+            
+            print(index.row)
+            
+            let status = self.solicitudes!.reversed()[index.row].estatus
+            
+            print(status)
+            
+            if status != "Por procesar"{
+            
+                DispatchQueue.main.async(execute: {
+                    
+                    let alert = UIAlertController(title: "¡Error!", message:"las ordenes con estatus: '\(status)' no pueden ser modificadas", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
+                        
+                     
+                    }))
+                    
+                    self.present(alert, animated: true, completion: nil)
+                    
+                    
+                })
+                
+            }else{
+                
+                 self.dscr = self.solicitudes!.reversed()[index.row].descripcion
+                 self.lugarId = self.solicitudes!.reversed()[index.row].location_id
+                 self.id = self.solicitudes!.reversed()[index.row].id
+                
+                print("la descripcion es:\(self.dscr) y el lugar es: \(self.lugarId)")
+                
+                self.editarMantenimientoVc.descrip = self.dscr
+                self.editarMantenimientoVc.lugarId = self.lugarId
+                self.editarMantenimientoVc.idSolicitud = self.id
+                
+                self.navigationController?.pushViewController(self.editarMantenimientoVc, animated: true)
+            
+            }
+            
+            
+            
+            
         }
         editar.backgroundColor = .orange
         
@@ -108,11 +181,8 @@ class MantenimientosViewController: UITableViewController {
     //MARK:METODO PARA CREAR UNA NUEVA ORDEN DE MANTENIMIENTO
     func crearMantenimiento(){
         
-        let crearMantenimiento = CreateMantenimientoViewController(style: .plain)
+        navigationController?.pushViewController(crearMantenimientoVc, animated: true)
         
-        navigationController?.pushViewController(crearMantenimiento, animated: true)
-        
-    
     }
     
     
@@ -128,7 +198,8 @@ class MantenimientosViewController: UITableViewController {
             
             let url = URL(string: "http://localhost:8000/api/clients/\(clientId)/solicitudes")
 
-            
+            print(url!)
+        
             print("este es el id del cliente\(clientId)")
             
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -171,31 +242,39 @@ class MantenimientosViewController: UITableViewController {
                 
                 do{
                     
-                    if let json = try JSONSerialization.jsonObject(with: data!, options:[]) as? [[String:Any]] {
+                    if let json = try JSONSerialization.jsonObject(with: data!, options:[]) as? [String:AnyObject] {
                         
                    //     print(json)
                         
                         self.solicitudes = [Solicitud]()
+                        
                      
                         print(json.count)
                         
-                        for x in json{
+                        let solicitudesArray = json["solicitudes"] as? [[String:AnyObject]]
+                        
+                        if let solicitudes = solicitudesArray {
                             
-                            let solicitud = Solicitud()
-                           
-                            
-                            solicitud.id = x["id"] as! Int
-                            solicitud.client_id = x["client_id"] as! Int
-                            solicitud.created_at = x["created_at"] as! String
-                            solicitud.estatus = x["estatus"] as! String
-                            solicitud.location_id = x["location_id"] as! Int
-                            solicitud.updated_at = x["updated_at"] as! String
-                            solicitud.descripcion = x["descripcion"] as! String
-                            
-                            self.solicitudes?.append(solicitud)
+                            for x in solicitudes{
+                                
+                                let solicitud = Solicitud()
+                                
+                                solicitud.id = x["id"] as! Int
+                                solicitud.client_id = x["client_id"] as! Int
+                                solicitud.created_at = x["created_at"] as! String
+                                solicitud.estatus = x["estatus"] as! String
+                                solicitud.location_id = x["location_id"] as! Int
+                                solicitud.updated_at = x["updated_at"] as! String
+                                solicitud.descripcion = x["descripcion"] as! String
+                                
+                                self.solicitudes?.append(solicitud)
+                                
+                            }
+
                         
                         }
-                    
+                        
+                        
                         
                         //recargo la data del collectionView de manera asincrona
                         DispatchQueue.main.async(execute: {
@@ -222,11 +301,122 @@ class MantenimientosViewController: UITableViewController {
 
         }
     
+    //MARK: LLAMANDO AL DELEGADO
+    func pasarDataDelegate(x: Int){
+        
+        if x == 1{
+            
+            fetchingMantenimientos()
+            
+        }
+        
+    }
     
+    
+    //MARK:METODO PARA RECARGAR LA DATA
     func reloadData(){
     
         fetchingMantenimientos()
         print("hola toque el reload")
+    }
+    
+    
+    
+    //MARK:FETCHING LOCATIONS
+    func fetchingLocations(){
+        
+        print("entre al fetching")
+        
+        mensajeError.hideElements()
+        loadingView.showMenuLoad()
+        
+        
+        let url = URL(string: "http://localhost:8000/api/locations")
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
+        
+        URLSession.shared.dataTask(with: url!) {(data, response, error) in
+            
+            guard data != nil else {
+                print("error de data: \(error!)")
+                
+                DispatchQueue.main.async(execute: {
+                    
+                    self.loadingView.hideLoadingView()
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                    
+                    let alert = UIAlertController(title: "¡Ha ocurrido un error!", message:"Por favor revise su conexión a internet", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
+                        
+                        
+                        if self.locations?.count == nil{
+                            //run your function here
+                            
+                            self.mensajeError.showElements()
+                            self.mensajeError.showView()
+                            self.mensajeError.reloadButton.addTarget(self, action: #selector(self.reloadData), for: .touchDown)
+                            self.tableView.isHidden = true
+                        }
+                    }))
+                    
+                    self.present(alert, animated: true, completion: nil)
+                    
+                })
+                
+                return
+                
+            }
+            
+            
+            do{
+                
+                if let json = try JSONSerialization.jsonObject(with: data!, options:[]) as? [[String:Any]] {
+                    
+                    //     print(json)
+                    
+                    self.locations = [Location]()
+                    
+                    print(json.count)
+                    
+                    for x in json{
+                        
+                        let location = Location()
+                        
+                        
+                        location.id = x["id"] as! Int
+                        location.nombre = x["nombre"] as! String
+                        location.descripcion = x["descripcion"] as! String
+                        
+                        self.locations?.append(location)
+                        
+                    }
+                    
+                    
+                    //recargo la data del collectionView de manera asincrona
+                    DispatchQueue.main.async(execute: {
+                        self.tableView.reloadData()
+                        self.loadingView.hideLoadingView()
+                        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                        
+                    })
+                    
+                }
+                
+            } catch let jsonError {
+                print("error en el json: \(jsonError)")
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                self.loadingView.hideLoadingView()
+                self.mensajeError.showElements()
+                self.mensajeError.showView()
+                self.mensajeError.reloadButton.addTarget(self, action: #selector(self.reloadData), for: .touchDown)
+                self.tableView.isHidden = true
+                
+            }
+            
+        }.resume()
+        
     }
     
  
