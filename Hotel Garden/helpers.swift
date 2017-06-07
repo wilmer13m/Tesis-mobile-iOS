@@ -48,6 +48,12 @@ extension UIColor{
         return UIColor.rgb(187, green: 8, blue: 236)
     }
     
+    static func anaranjadoEditar() -> UIColor{
+
+        return UIColor.rgb(230, green: 126, blue: 34)
+    
+    }
+    
 }
 
 

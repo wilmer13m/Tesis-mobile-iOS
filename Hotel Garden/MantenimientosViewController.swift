@@ -31,6 +31,9 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
     var id = Int()
     var lugarId = Int()
     
+    var sweetAlert = SweetAlert()
+
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -112,15 +115,63 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
     }
     
     
+    
     override func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
        
         let borrar = UITableViewRowAction(style: .normal, title: "Borrar") { action, index in
             print("borrar button tapped")
             
+            let status = self.solicitudes!.reversed()[index.row].estatus
+            let idSolicitud = self.solicitudes!.reversed()[index.row].id
+            
+            if status != "Por procesar"{
+                
+                DispatchQueue.main.async(execute: {
+                    
+                    let alert = UIAlertController(title: "¡Error!", message:"las ordenes con estatus: '\(status)' no pueden ser eliminadas", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
+                        
+                        
+                    }))
+                    
+                    
+                    self.present(alert, animated: true, completion: nil)
+                    
+                    
+                })
+                
+            }else{
+            
+                print("pase la verificacion")
+                
+                DispatchQueue.main.async(execute: {
+                    
+                    let alert = UIAlertController(title: "¡Atencion!", message:"¿Esta seguro que desea borrar esta orden?", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.destructive, handler:  { action in
+                        
+                        self.deleteMantenimiento(id: idSolicitud)
+                        
+                    }))
+                    
+                    
+                    alert.addAction(UIAlertAction(title: "Cancel" , style: UIAlertActionStyle.cancel, handler:  { action in
+                        
+                        
+                    }))
+                    
+                    self.present(alert, animated: true, completion: nil)
+                    
+                    
+                })
+            
+            
+            }
+
         }
         
-        
-        borrar.backgroundColor = .red
+        borrar.backgroundColor = UIColor.rgb(231, green: 76, blue: 60)
         
         
         let editar = UITableViewRowAction(style: .normal, title: "Editar") { action, index in
@@ -146,6 +197,7 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
                     self.present(alert, animated: true, completion: nil)
                     
                     
+                    
                 })
                 
             }else{
@@ -168,8 +220,8 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
             
             
         }
-        editar.backgroundColor = .orange
         
+        editar.backgroundColor = .orange
         
         return [borrar,editar]
     }
@@ -417,6 +469,72 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
             
         }.resume()
         
+    }
+    
+    
+    //MARK:METODO PARA BORRAR LOGICAMENTE EL MANTENIMIENTO SELECCIONADO
+    func deleteMantenimiento(id : Int){
+    
+        let clientId : Int = prefs.integer(forKey: "ID_CLIENTE") as Int
+        
+        loadingView.showMenuLoad()
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
+        
+        var request = URLRequest(url: URL(string: "http://localhost:8000/api/clients/\(clientId)/solicitudes/\(id)")!)
+        
+        print("http://localhost:8000/api/clients/\(clientId)/solicitudes/\(id)")
+        
+        
+        request.httpMethod = "DELETE"
+        
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print("error=\(error!)")
+                return
+            }
+            
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200{           // check for http errors
+                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                print("response = \(response!)")
+                
+                
+                DispatchQueue.main.async(execute: {
+                    
+                    self.loadingView.hideLoadingView()
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                    
+                    let alert = UIAlertController(title: "¡Ha ocurrido un error!", message:"Por favor revise su conexión a internet", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
+                        
+                    }))
+                    
+                    self.present(alert, animated: true, completion: nil)
+                    
+                })
+                
+            }
+            
+            //Todo salio bn
+            DispatchQueue.main.async(execute: {
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                self.loadingView.hideLoadingView()
+                _ = self.sweetAlert.showAlert("Completado!", subTitle: "Su orden de mantenimiento ha sido borrada con exito", style: AlertStyle.success)
+                
+                let responseString = String(data: data, encoding: .utf8)
+                print("responseString = \(responseString!)")
+                self.fetchingMantenimientos()
+            })
+            
+            
+            //aqui poner el sweet alert de error
+        }
+        
+        task.resume()
+    
+    
     }
     
  
