@@ -167,3 +167,15 @@ extension String {
 
 
 }
+
+
+
+
+class HttpRuta {
+
+
+    static var ruta = "http:localhost:8000/api"
+
+
+
+}

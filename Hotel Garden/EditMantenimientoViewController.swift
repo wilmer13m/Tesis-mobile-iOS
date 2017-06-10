@@ -21,6 +21,8 @@ class EditMantenimientoViewController: UITableViewController,UIPickerViewDataSou
     let cellId2 = "cellId2"
     let cellId3 = "cellId3"
     
+   // let urlLocal = "http://192.168.43.120/api"
+    
     let mensajeError = MensajeError(ImageName: "sin_conexion", Titulo: "Oops!", Mensaje: "No hay conexion a internet")
     let loadingView = LoadingView(message: "Cargando...")
     
@@ -230,7 +232,7 @@ class EditMantenimientoViewController: UITableViewController,UIPickerViewDataSou
         loadingView.showMenuLoad()
         
         
-        let url = URL(string: "http://localhost:8000/api/locations")
+        let url = URL(string: "\(HttpRuta.ruta)/locations")
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
@@ -361,9 +363,9 @@ class EditMantenimientoViewController: UITableViewController,UIPickerViewDataSou
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
             
             
-            var request = URLRequest(url: URL(string: "http://localhost:8000/api/clients/\(clientId)/solicitudes/\(idSolicitud)")!)
+            var request = URLRequest(url: URL(string: "\(HttpRuta.ruta)/clients/\(clientId)/solicitudes/\(idSolicitud)")!)
             
-            print("http://localhost:8000/api/clients/\(clientId)/solicitudes/\(idSolicitud)")
+           // print("http://localhost:8000/api/clients/\(clientId)/solicitudes/\(idSolicitud)")
             
             
             request.httpMethod = "PUT"

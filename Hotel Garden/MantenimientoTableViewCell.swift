@@ -47,24 +47,27 @@ class MantenimientoTableViewCell: UITableViewCell {
             //asginando el label title
             titleLabel.text = solicitud?.estatus
             
+            if let status = solicitud?.estatus{
+                
+                switch status {
+                case "Por procesar":
+                    
+                    statusCircle.backgroundColor = .red
+                    break
+                    
+                case "Procesando":
+                    
+                    statusCircle.backgroundColor = .yellow
+                    break
+                    
+                default:
+                    
+                    statusCircle.backgroundColor = .green
+                    break
+                }
             
-            switch solicitud!.estatus {
-            case "Por procesar":
-                
-                statusCircle.backgroundColor = .red
-                break
-                
-            case "Procesando":
-                
-                statusCircle.backgroundColor = .yellow
-                break
-                
-            default:
-                
-                statusCircle.backgroundColor = .green
-                break
             }
-            
+                        
         }
         
     }

@@ -20,6 +20,8 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
     let cellId2 = "cellId2"
     let cellId3 = "cellId3"
     
+   // let urlLocal = "http://192.168.43.120/api"
+    
     let mensajeError = MensajeError(ImageName: "sin_conexion", Titulo: "Oops!", Mensaje: "No hay conexion a internet")
     let loadingView = LoadingView(message: "Cargando...")
     
@@ -73,7 +75,14 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
         navigationController?.navigationBar.tintColor = .white
         
     }
-
+    
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        tableView.reloadData()
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -202,10 +211,11 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
         loadingView.showMenuLoad()
         
         
-        let url = URL(string: "http://localhost:8000/api/locations")
+        let url = URL(string: "\(HttpRuta.ruta)/locations")
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
+        print(url)
         
         URLSession.shared.dataTask(with: url!) {(data, response, error) in
             
@@ -322,7 +332,7 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
 
             
-            var request = URLRequest(url: URL(string: "http://localhost:8000/api/clients/\(clientId)/solicitudes")!)
+            var request = URLRequest(url: URL(string: "\(HttpRuta.ruta)/clients/\(clientId)/solicitudes")!)
             request.httpMethod = "POST"
             let postString = "location_id=\(location_id)&estatus=\(estatus)&descripcion=\(descripcion)"
             request.httpBody = postString.data(using: .utf8)

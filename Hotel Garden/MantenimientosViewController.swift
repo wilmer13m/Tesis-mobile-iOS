@@ -32,7 +32,13 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
     var lugarId = Int()
     
     var sweetAlert = SweetAlert()
-
+    
+    lazy var refreshControl1: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "pull to refresh")
+        refreshControl.addTarget(self, action: #selector(MantenimientosViewController.handleRefresh(refreshControl:)), for: .valueChanged)
+        return refreshControl
+    }()
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,6 +69,8 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
         
         //SETTING TABLEVIEW
         tableView.register(MantenimientoTableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.addSubview(refreshControl1)
+        
         
         //SETTING NAVIGATIONBAR
         navigationItem.title = "Mantenimientos"
@@ -81,7 +89,11 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
 
     
     override func viewWillDisappear(_ animated: Bool) {
-        mensajeError.hideElements()
+        DispatchQueue.main.async(execute: {
+            self.mensajeError.hideElements()
+            
+        })
+
     }
     
     
@@ -248,7 +260,7 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
         
             let clientId : Int = prefs.integer(forKey: "ID_CLIENTE") as Int
             
-            let url = URL(string: "http://localhost:8000/api/clients/\(clientId)/solicitudes")
+            let url = URL(string: "\(HttpRuta.ruta)/clients/\(clientId)/solicitudes")
 
             print(url!)
         
@@ -383,7 +395,7 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
         loadingView.showMenuLoad()
         
         
-        let url = URL(string: "http://localhost:8000/api/locations")
+        let url = URL(string: "\(HttpRuta.ruta)/locations")
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
@@ -481,9 +493,9 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         
-        var request = URLRequest(url: URL(string: "http://localhost:8000/api/clients/\(clientId)/solicitudes/\(id)")!)
+        var request = URLRequest(url: URL(string: "\(HttpRuta.ruta)/clients/\(clientId)/solicitudes/\(id)")!)
         
-        print("http://localhost:8000/api/clients/\(clientId)/solicitudes/\(id)")
+       // print("http://localhost:8000/api/clients/\(clientId)/solicitudes/\(id)")
         
         
         request.httpMethod = "DELETE"
@@ -537,5 +549,15 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
     
     }
     
+    
+    //MARK: METODO QUE SE USA PARA RECARGAR LA TABLA CUANDO SE HACE PULLDOWN
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        self.solicitudes = nil
+        //pag = 1
+        //cont = 0
+        fetchingMantenimientos()
+        refreshControl.endRefreshing()
+    }
+
  
 }
