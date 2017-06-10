@@ -14,6 +14,9 @@ class HomeViewController: UITableViewController {
     let cellId1 = "cellId1"
     let cellId2 = "cellID2"
     
+    let prefs:UserDefaults = UserDefaults.standard
+
+    
     var header : StretchHeader!
 
     let settings: [Setting] = {
@@ -36,8 +39,33 @@ class HomeViewController: UITableViewController {
        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named:"logout")?.withRenderingMode(.alwaysTemplate) , style: .done, target: self, action: #selector(self.logOut))
         navigationItem.rightBarButtonItem?.tintColor = UIColor.white
         
+        //VIENDO SI EL USUARIO YA HA INICIADO SESION PREVIAMENTE
+        print("\(prefs.integer(forKey: "ISLOGGEDIN") as Int)")
+        
+     
+
+        
         setupHeaderView()
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let isLoggedIn:Int = prefs.integer(forKey: "ISLOGGEDIN") as Int
+        
+        switch isLoggedIn {
+            
+        case 1:
+            
+            print("Ya inicio sesion lo dejo en el main Screen")
+            
+        default:
+            
+            let loginViewController = LoginViewController()
+            present(loginViewController, animated: false, completion: nil)
+            print("lo mande al login porque no ha iniciado sesion")
+            break
+            
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -129,6 +157,8 @@ class HomeViewController: UITableViewController {
         let okAction = UIAlertAction(title: "Ok", style: .destructive) {
             (result : UIAlertAction) -> Void in
             
+            let prefs:UserDefaults = UserDefaults.standard
+            prefs.set(0, forKey: "ISLOGGEDIN") //asigando el valor 0 porque el cliente se deslogueo
             let loginVc = LoginViewController()
             
             self.present(loginVc, animated: true, completion: nil)

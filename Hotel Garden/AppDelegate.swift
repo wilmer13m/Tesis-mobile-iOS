@@ -26,9 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //creando el controlador para la vista principal y le embebimos un navigationController
         
         
-        let loginViewController = LoginViewController()
+//        let loginViewController = LoginViewController()
         //asigando el navigation controller como la vista root
-        window?.rootViewController = loginViewController
+        let homeViewController = HomeViewController(style: .plain)
+        let  navigationController = UINavigationController(rootViewController: homeViewController)
+        window?.rootViewController = navigationController
         
         //setting navbar
         UINavigationBar.appearance().barTintColor = UIColor.naranjaGarden()

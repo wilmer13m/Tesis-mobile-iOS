@@ -215,8 +215,6 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
-        print(url)
-        
         URLSession.shared.dataTask(with: url!) {(data, response, error) in
             
             guard data != nil else {

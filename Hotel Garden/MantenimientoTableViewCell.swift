@@ -17,7 +17,6 @@ class MantenimientoTableViewCell: UITableViewCell {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
             setupViews()
             selectionStyle = .none // para que no se vea el el color gris cuando se seleccione esa celda
-            //accessoryType = .disclosureIndicator
     }
     
     
@@ -52,13 +51,17 @@ class MantenimientoTableViewCell: UITableViewCell {
                 switch status {
                 case "Por procesar":
                     
-                    statusCircle.backgroundColor = .red
+                    statusCircle.backgroundColor = .azul()
                     break
                     
                 case "Procesando":
                     
                     statusCircle.backgroundColor = .yellow
                     break
+                    
+                case "Cancelada":
+                    
+                    statusCircle.backgroundColor = .red
                     
                 default:
                     
@@ -67,7 +70,7 @@ class MantenimientoTableViewCell: UITableViewCell {
                 }
             
             }
-                        
+            
         }
         
     }

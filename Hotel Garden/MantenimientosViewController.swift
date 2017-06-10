@@ -85,6 +85,9 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
 //        //FETCHING DATA
 //        fetchingMantenimientos()
         
+        
+
+        
     }
 
     
@@ -130,6 +133,7 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
        
+
         let borrar = UITableViewRowAction(style: .normal, title: "Borrar") { action, index in
             print("borrar button tapped")
             
@@ -185,6 +189,7 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
         
         borrar.backgroundColor = UIColor.rgb(231, green: 76, blue: 60)
         
+    
         
         let editar = UITableViewRowAction(style: .normal, title: "Editar") { action, index in
             print("editar button tapped")
@@ -233,7 +238,8 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
             
         }
         
-        editar.backgroundColor = .orange
+        editar.backgroundColor = .azul()
+        
         
         return [borrar,editar]
     }
@@ -494,9 +500,7 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
         
         
         var request = URLRequest(url: URL(string: "\(HttpRuta.ruta)/clients/\(clientId)/solicitudes/\(id)")!)
-        
-       // print("http://localhost:8000/api/clients/\(clientId)/solicitudes/\(id)")
-        
+
         
         request.httpMethod = "DELETE"
         
