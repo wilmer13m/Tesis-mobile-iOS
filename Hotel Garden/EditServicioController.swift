@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditMantenimientoViewController: UITableViewController,UIPickerViewDataSource, UIPickerViewDelegate,UITextViewDelegate,UITextFieldDelegate,SweetAlertDelegate {
+class EditServicioViewController: UITableViewController,UIPickerViewDataSource, UIPickerViewDelegate,UITextViewDelegate,UITextFieldDelegate,SweetAlertDelegate {
 
     //var que traigo del controlador anterior
     var descrip = String()
@@ -21,7 +21,6 @@ class EditMantenimientoViewController: UITableViewController,UIPickerViewDataSou
     let cellId2 = "cellId2"
     let cellId3 = "cellId3"
     
-   // let urlLocal = "http://192.168.43.120/api"
     
     let mensajeError = MensajeError(ImageName: "sin_conexion", Titulo: "Oops!", Mensaje: "No hay conexion a internet")
     let loadingView = LoadingView(message: "Cargando...")
@@ -46,7 +45,7 @@ class EditMantenimientoViewController: UITableViewController,UIPickerViewDataSou
     
     var band = Int()
     
-    var crearMantDelegate : CrearMantenimientoDelegate?
+    var crearMantDelegate : CrearServicioDelegate?
 
     var nombreSitio = String()
     

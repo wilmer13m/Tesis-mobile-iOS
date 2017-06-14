@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MantenimientosViewController: UITableViewController,CrearMantenimientoDelegate {
+class MantenimientosViewController: UITableViewController,CrearServicioDelegate {
 
     let cellId = "cellId"
     
@@ -22,9 +22,8 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
 
     var bandera = Int()
     
-    var crearMantenimientoVc = CreateMantenimientoViewController(style: .plain)
-    var editarMantenimientoVc = EditMantenimientoViewController(style: .plain)
-    
+    var crearMantenimientoVc = CreateServicioViewController(style: .plain)
+    var editarMantenimientoVc = EditServicioViewController(style: .plain)
     var locations : [Location]?
     
     var dscr = String()
@@ -68,7 +67,7 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
         crearMantenimientoVc.crearMantDelegate = self
         
         //SETTING TABLEVIEW
-        tableView.register(MantenimientoTableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(ServicioTableViewCell.self, forCellReuseIdentifier: cellId)
         tableView.addSubview(refreshControl1)
         
         
@@ -115,7 +114,7 @@ class MantenimientosViewController: UITableViewController,CrearMantenimientoDele
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! MantenimientoTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! ServicioTableViewCell
         
         
         cell.solicitud = solicitudes?.reversed()[indexPath.row]

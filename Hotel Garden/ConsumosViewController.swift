@@ -67,9 +67,12 @@ class ConsumoViewController: UITableViewController {
     
     //MARK:METODO PARA CREAR CONSUMO
     func crearConsumo(){
-       // navigationItem.backBarButtonItem?.title = "dfs2" // This will show in the next view controller being pushed
 
-            
+        let crearConsumoVc = CreateConsumoViewController(style: .grouped)
+        navigationController?.pushViewController(crearConsumoVc, animated: true)
+
+        
+        
     }
     
 }

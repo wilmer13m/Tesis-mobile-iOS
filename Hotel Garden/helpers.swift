@@ -176,6 +176,31 @@ class HttpRuta {
 
     static var ruta = "http:localhost:8000/api"
 
-
-
 }
+
+
+class ActionSteeper: UIStepper {
+    var touchUpInside: ((_ steeper: UIStepper) -> ())?
+ 
+    
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:)") }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupSteeper()
+    }
+    
+    func setupSteeper() {
+        //this is my most common setup, but you can customize to your liking
+        addTarget(self, action: #selector(touchUpInside(sender:)), for: .touchUpInside)
+    }
+    
+    //actions
+    func touchUpInside(sender: UIStepper) {
+        touchUpInside?(sender)
+    }
+    
+}
+
+
+
+

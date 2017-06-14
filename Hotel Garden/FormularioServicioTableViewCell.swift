@@ -22,6 +22,7 @@ class FormularioServicioTableViewCell: UITableViewCell {
     }
     
     
+    
     let labelTitle : UILabel = {
         
         let label = UILabel()
@@ -29,6 +30,18 @@ class FormularioServicioTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.darkGray
         return label
+    }()
+    
+    
+    let imageIconPlace : UIImageView = {
+        
+        let icon = UIImageView()
+        icon.clipsToBounds = true
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.contentMode = .scaleAspectFit
+        icon.image = UIImage(named: "place")?.withRenderingMode(.alwaysTemplate)
+        icon.tintColor = UIColor.naranjaGarden()
+        return icon
     }()
     
     
@@ -48,6 +61,8 @@ class FormularioServicioTableViewCell: UITableViewCell {
         return view
         
     }()
+    
+
     
     let descripcionTextview : UITextView = {
         
@@ -74,17 +89,22 @@ class FormularioServicioTableViewCell: UITableViewCell {
     func setupViews(){
         
         addSubview(labelTitle)
+        addSubview(imageIconPlace)
         addSubview(textfieldLocation)
         addSubview(separatorView)
-        addSubview(descripcionTextview)
         addSubview(separatorView2)
 //
         
         addConstraint(NSLayoutConstraint(item: labelTitle, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 5))
         addConstraint(NSLayoutConstraint(item: labelTitle, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 10))
         
+        addConstraint(NSLayoutConstraint(item: imageIconPlace, attribute: .top, relatedBy: .equal, toItem: labelTitle, attribute: .bottom, multiplier: 1, constant: 3))
+        addConstraint(NSLayoutConstraint(item: imageIconPlace, attribute: .leading, relatedBy: .equal, toItem: labelTitle, attribute: .leading, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: imageIconPlace, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 25))
+        addConstraint(NSLayoutConstraint(item: imageIconPlace, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 25))
+        
         addConstraint(NSLayoutConstraint(item: textfieldLocation, attribute: .top, relatedBy: .equal, toItem: labelTitle, attribute: .bottom, multiplier: 1, constant: 3))
-        addConstraint(NSLayoutConstraint(item: textfieldLocation, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 10))
+        addConstraint(NSLayoutConstraint(item: textfieldLocation, attribute: .leading, relatedBy: .equal, toItem: imageIconPlace, attribute: .trailing, multiplier: 1, constant: 5))
         addConstraint(NSLayoutConstraint(item: textfieldLocation, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: -10))
 
         addConstraint(NSLayoutConstraint(item: separatorView, attribute: .top, relatedBy: .equal, toItem: textfieldLocation, attribute: .bottom, multiplier: 1, constant: 5))
@@ -169,6 +189,18 @@ class TextViewDescripCell : UITableViewCell {
         return label
     }()
     
+    
+    let imageIconDescrip : UIImageView = {
+        
+        let icon = UIImageView()
+        icon.clipsToBounds = true
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.contentMode = .scaleAspectFit
+        icon.image = UIImage(named: "reservas")?.withRenderingMode(.alwaysTemplate)
+        icon.tintColor = UIColor.naranjaGarden()
+        return icon
+    }()
+    
     let descripcionTextview : UITextView = {
         
         let descripcion = UITextView()
@@ -192,6 +224,7 @@ class TextViewDescripCell : UITableViewCell {
     func setupViews(){
     
         addSubview(labelTitle)
+        addSubview(imageIconDescrip)
         addSubview(descripcionTextview)
         addSubview(separatorView)
         
@@ -199,10 +232,15 @@ class TextViewDescripCell : UITableViewCell {
         addConstraint(NSLayoutConstraint(item: labelTitle, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 5))
         addConstraint(NSLayoutConstraint(item: labelTitle, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 10))
         
-        addConstraint(NSLayoutConstraint(item: descripcionTextview, attribute: .top, relatedBy: .equal, toItem: labelTitle, attribute: .bottom, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: descripcionTextview, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 10))
-        addConstraint(NSLayoutConstraint(item: descripcionTextview, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: -10))
         
+        addConstraint(NSLayoutConstraint(item: imageIconDescrip, attribute: .top, relatedBy: .equal, toItem: labelTitle, attribute: .bottom, multiplier: 1, constant: 3))
+        addConstraint(NSLayoutConstraint(item: imageIconDescrip, attribute: .leading, relatedBy: .equal, toItem: labelTitle, attribute: .leading, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: imageIconDescrip, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 25))
+        addConstraint(NSLayoutConstraint(item: imageIconDescrip, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 25))
+        
+        addConstraint(NSLayoutConstraint(item: descripcionTextview, attribute: .top, relatedBy: .equal, toItem: labelTitle, attribute: .bottom, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: descripcionTextview, attribute: .leading, relatedBy: .equal, toItem: imageIconDescrip, attribute: .trailing, multiplier: 1, constant: 5))
+        addConstraint(NSLayoutConstraint(item: descripcionTextview, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: -10))
         addConstraint(NSLayoutConstraint(item: descripcionTextview, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 50))
 
         
@@ -210,8 +248,6 @@ class TextViewDescripCell : UITableViewCell {
         addConstraint(NSLayoutConstraint(item: separatorView, attribute: .leading, relatedBy: .equal, toItem: descripcionTextview, attribute: .leading, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: separatorView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: separatorView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 1))
-
-        
         
     
     }

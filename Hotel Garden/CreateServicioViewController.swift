@@ -7,14 +7,14 @@
 //
 
 
-protocol CrearMantenimientoDelegate {
+protocol CrearServicioDelegate {
     
     func pasarDataDelegate(x: Int)
 }
 
 import UIKit
 
-class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataSource, UIPickerViewDelegate,UITextViewDelegate,UITextFieldDelegate,SweetAlertDelegate {
+class CreateServicioViewController: UITableViewController,UIPickerViewDataSource, UIPickerViewDelegate,UITextViewDelegate,UITextFieldDelegate,SweetAlertDelegate {
 
     let cellId1 = "cellId1"
     let cellId2 = "cellId2"
@@ -44,7 +44,7 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
     
     var band = Int()
 
-    var crearMantDelegate : CrearMantenimientoDelegate?
+    var crearMantDelegate : CrearServicioDelegate?
     
 
     
@@ -144,26 +144,14 @@ class CreateMantenimientoViewController: UITableViewController,UIPickerViewDataS
     
     //MARK: METODOS DEL TEXTVIEW
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if(text == "\n") {
-            textView.resignFirstResponder()
-            return false
-            
-        }else if text != "\n"{
-            
-            guard let text = textView.text else {
-                
-                return true
-            }
-            let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
-            
-            let numberOfChars = newText.characters.count
-            return numberOfChars <= 70
-        }
         
-        
-        return true
-        
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.characters.count // for Swift use count(newText)
+        return numberOfChars < 100
+            
+    
     }
+    
     
     
     func textViewDidEndEditing(_ textView: UITextView) {

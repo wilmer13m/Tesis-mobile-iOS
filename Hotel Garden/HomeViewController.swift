@@ -20,7 +20,7 @@ class HomeViewController: UITableViewController {
     var header : StretchHeader!
 
     let settings: [Setting] = {
-        return [Setting(name: "Consumos",imageName : "consumos",color: UIColor.azul(),descripcion: "Revise sus consumos aqui"),Setting(name: "Servicios",imageName : "servicios",color: UIColor.verde(),descripcion:"Informacion de servicios"),Setting(name: "Mantenimientos",imageName : "reservas",color: UIColor.naranjaGarden(),descripcion:"realice ordenes de mantenimiento"),Setting(name: "Galeria",imageName : "galeria",color: UIColor.morado(),descripcion:"conozca nuestras instalaciones")]
+        return [Setting(name: "Consumos",imageName : "servicios",color: UIColor.azul(),descripcion: "Revise sus consumos aqui"),Setting(name: "Servicios",imageName : "reservas",color: UIColor.verde(),descripcion:"Informacion de servicios"),Setting(name: "Galeria",imageName : "galeria",color: UIColor.morado(),descripcion:"conozca nuestras instalaciones")]
     }()
     
     

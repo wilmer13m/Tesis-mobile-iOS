@@ -8,10 +8,8 @@
 
 import UIKit
 
-class MantenimientoTableViewCell: UITableViewCell {
-    
-    
-    
+class ServicioTableViewCell: UITableViewCell {
+        
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -79,7 +77,7 @@ class MantenimientoTableViewCell: UITableViewCell {
             
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.naranjaGarden()
+        view.backgroundColor = UIColor.verde()
         view.layer.cornerRadius = 20
         return view
             
