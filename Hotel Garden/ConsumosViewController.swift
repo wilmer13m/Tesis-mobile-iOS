@@ -32,6 +32,15 @@ class ConsumoViewController: UITableViewController {
         
         
     }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        DispatchQueue.main.async(execute: {
+           // self.mensajeError.hideElements()
+            
+        })
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

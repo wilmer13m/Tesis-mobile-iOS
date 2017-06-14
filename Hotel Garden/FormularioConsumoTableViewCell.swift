@@ -36,7 +36,7 @@ class FormularioConsumoTableViewCell: UITableViewCell {
     let mySteeper : ActionSteeper = {
     
         let steeper = ActionSteeper()
-        steeper.minimumValue = 0
+        steeper.minimumValue = 1
         steeper.maximumValue = 99
         steeper.translatesAutoresizingMaskIntoConstraints = false
         steeper.clipsToBounds = true
@@ -52,7 +52,7 @@ class FormularioConsumoTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.boldSystemFont(ofSize: 12)
-        label.text = "Cant: 0"
+        label.text = "Cant: 1"
         return label
     
     }()

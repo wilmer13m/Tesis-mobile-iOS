@@ -11,6 +11,8 @@ import UIKit
 class DetailConsumoTableViewController: UITableViewController {
     
     let cellId = "cellId"
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
