@@ -37,6 +37,10 @@
 		A5C159EA1EF1AD0300AD6E01 /* CreateConsumoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C159E91EF1AD0300AD6E01 /* CreateConsumoViewController.swift */; };
 		A5C159EC1EF1C74A00AD6E01 /* CreateConsumoBebidasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C159EB1EF1C74A00AD6E01 /* CreateConsumoBebidasViewController.swift */; };
 		A5C159EE1EF1CE7A00AD6E01 /* CreateConsmumoPostresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C159ED1EF1CE7A00AD6E01 /* CreateConsmumoPostresViewController.swift */; };
+		A5C159F01EF1E4EF00AD6E01 /* PreviewOrdenConsumoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C159EF1EF1E4EF00AD6E01 /* PreviewOrdenConsumoViewController.swift */; };
+		A5C159F21EF1F71100AD6E01 /* OrderConsumoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C159F11EF1F71100AD6E01 /* OrderConsumoTableViewCell.swift */; };
+		A5C159F41EF1FD8D00AD6E01 /* DetailServiciosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C159F31EF1FD8D00AD6E01 /* DetailServiciosViewController.swift */; };
+		A5C159F61EF201D500AD6E01 /* DetailServicioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C159F51EF201D500AD6E01 /* DetailServicioTableViewCell.swift */; };
 		A5E073381EE3D8EE0098A2A8 /* Solicitud.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E073371EE3D8EE0098A2A8 /* Solicitud.swift */; };
 		A5E0733A1EE3E3DD0098A2A8 /* MantenimientoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E073391EE3E3DD0098A2A8 /* MantenimientoTableViewCell.swift */; };
 		A5E0733C1EE3E8BF0098A2A8 /* CreateServicioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E0733B1EE3E8BF0098A2A8 /* CreateServicioViewController.swift */; };
@@ -103,6 +107,10 @@
 		A5C159E91EF1AD0300AD6E01 /* CreateConsumoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateConsumoViewController.swift; sourceTree = "<group>"; };
 		A5C159EB1EF1C74A00AD6E01 /* CreateConsumoBebidasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateConsumoBebidasViewController.swift; sourceTree = "<group>"; };
 		A5C159ED1EF1CE7A00AD6E01 /* CreateConsmumoPostresViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateConsmumoPostresViewController.swift; sourceTree = "<group>"; };
+		A5C159EF1EF1E4EF00AD6E01 /* PreviewOrdenConsumoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewOrdenConsumoViewController.swift; sourceTree = "<group>"; };
+		A5C159F11EF1F71100AD6E01 /* OrderConsumoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderConsumoTableViewCell.swift; sourceTree = "<group>"; };
+		A5C159F31EF1FD8D00AD6E01 /* DetailServiciosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailServiciosViewController.swift; sourceTree = "<group>"; };
+		A5C159F51EF201D500AD6E01 /* DetailServicioTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailServicioTableViewCell.swift; sourceTree = "<group>"; };
 		A5E073371EE3D8EE0098A2A8 /* Solicitud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Solicitud.swift; sourceTree = "<group>"; };
 		A5E073391EE3E3DD0098A2A8 /* MantenimientoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MantenimientoTableViewCell.swift; sourceTree = "<group>"; };
 		A5E0733B1EE3E8BF0098A2A8 /* CreateServicioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateServicioViewController.swift; sourceTree = "<group>"; };
@@ -169,11 +177,13 @@
 			isa = PBXGroup;
 			children = (
 				A529F7351EDD19C80054BA57 /* DetailConsumoTableViewCell.swift */,
+				A5C159F51EF201D500AD6E01 /* DetailServicioTableViewCell.swift */,
 				A562FA2C1EE4EDD000DDE9B0 /* FormularioServicioTableViewCell.swift */,
 				A58B314C1EF0D66A0079A2D8 /* FormularioConsumoTableViewCell.swift */,
 				A509F04F1EDA027F00F8AC5D /* HomeTableViewCells.swift */,
 				A509F0591EDA468D00F8AC5D /* LoginView.swift */,
 				A5E073391EE3E3DD0098A2A8 /* MantenimientoTableViewCell.swift */,
+				A5C159F11EF1F71100AD6E01 /* OrderConsumoTableViewCell.swift */,
 				A529F7331EDD05370054BA57 /* PreviewConsumoTableViewCell.swift */,
 				A5ABF8491ED9306F003FA132 /* Main.storyboard */,
 			);
@@ -189,10 +199,12 @@
 				A5C159ED1EF1CE7A00AD6E01 /* CreateConsmumoPostresViewController.swift */,
 				A5E0733B1EE3E8BF0098A2A8 /* CreateServicioViewController.swift */,
 				A529F7391EDD1ADD0054BA57 /* DetailConsumoTableViewController.swift */,
+				A5C159F31EF1FD8D00AD6E01 /* DetailServiciosViewController.swift */,
 				A5FCB7631EE718350041A8C8 /* EditServicioController.swift */,
 				A5ABF8471ED9306F003FA132 /* HomeViewController.swift */,
 				A509F0571EDA3E5600F8AC5D /* LoginViewController.swift */,
 				A529F7311EDB8F960054BA57 /* MantenimientosViewController.swift */,
+				A5C159EF1EF1E4EF00AD6E01 /* PreviewOrdenConsumoViewController.swift */,
 				A529F72F1EDB8F140054BA57 /* ServiciosViewController.swift */,
 			);
 			name = controllers;
@@ -560,6 +572,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5E073381EE3D8EE0098A2A8 /* Solicitud.swift in Sources */,
+				A5C159F21EF1F71100AD6E01 /* OrderConsumoTableViewCell.swift in Sources */,
+				A5C159F61EF201D500AD6E01 /* DetailServicioTableViewCell.swift in Sources */,
 				A529F7361EDD19C80054BA57 /* DetailConsumoTableViewCell.swift in Sources */,
 				A509F0581EDA3E5600F8AC5D /* LoginViewController.swift in Sources */,
 				A562F27E1EE4CD8A008FEBF3 /* MensajeError.swift in Sources */,
@@ -567,6 +581,7 @@
 				A509F0501EDA027F00F8AC5D /* HomeTableViewCells.swift in Sources */,
 				A529F7321EDB8F960054BA57 /* MantenimientosViewController.swift in Sources */,
 				A529F7341EDD05370054BA57 /* PreviewConsumoTableViewCell.swift in Sources */,
+				A5C159F01EF1E4EF00AD6E01 /* PreviewOrdenConsumoViewController.swift in Sources */,
 				A5E0733C1EE3E8BF0098A2A8 /* CreateServicioViewController.swift in Sources */,
 				A5ABF8481ED9306F003FA132 /* HomeViewController.swift in Sources */,
 				A509F0561EDA28E900F8AC5D /* Setting.swift in Sources */,
@@ -582,6 +597,7 @@
 				A5C159EE1EF1CE7A00AD6E01 /* CreateConsmumoPostresViewController.swift in Sources */,
 				A562FA2D1EE4EDD000DDE9B0 /* FormularioServicioTableViewCell.swift in Sources */,
 				A5ABF84E1ED9306F003FA132 /* Hotel_Garden.xcdatamodeld in Sources */,
+				A5C159F41EF1FD8D00AD6E01 /* DetailServiciosViewController.swift in Sources */,
 				A5C159EA1EF1AD0300AD6E01 /* CreateConsumoViewController.swift in Sources */,
 				A509F05A1EDA468D00F8AC5D /* LoginView.swift in Sources */,
 				A509F04E1EDA01B500F8AC5D /* helpers.swift in Sources */,

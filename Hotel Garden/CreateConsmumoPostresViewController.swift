@@ -207,6 +207,7 @@ class CreateConsmumoPostresViewController: UITableViewController {
                             
                             producto.id = prod["id"] as! Int
                             producto.nombre = prod["nombre"] as! String
+                            producto.tipo = tipo
                             
                             self.productos?.append(producto)
                         }
@@ -258,8 +259,9 @@ class CreateConsmumoPostresViewController: UITableViewController {
         
         }else{
         
-            print("voy al preview de la vista")
-        
+            let previewOrdenConsumoVc = PreviewOrdenConsumoViewController(style: .grouped)
+            previewOrdenConsumoVc.currentOrder = currentOrder
+            navigationController?.pushViewController(previewOrdenConsumoVc, animated: true)
         }
     
     }

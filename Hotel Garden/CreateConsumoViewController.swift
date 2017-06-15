@@ -213,6 +213,7 @@ class CreateConsumoViewController: UITableViewController {
                             
                             producto.id = prod["id"] as! Int
                             producto.nombre = prod["nombre"] as! String
+                            producto.tipo = tipo
                             
                             self.productos?.append(producto)
                         }

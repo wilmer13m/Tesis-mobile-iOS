@@ -248,6 +248,20 @@ class ServicioViewController: UITableViewController,CrearServicioDelegate {
         return true
     }
     
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+        let detailServicioVc = DetailServiciosViewController(style: .grouped)
+        detailServicioVc.solicitud = solicitudes!.reversed()[indexPath.row]
+        
+        navigationController?.pushViewController(detailServicioVc, animated: true)
+        
+    }
+    
+    
+    
+    
     //MARK:METODO PARA CREAR UNA NUEVA ORDEN DE MANTENIMIENTO
     func crearMantenimiento(){
         

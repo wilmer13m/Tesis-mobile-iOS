@@ -136,6 +136,34 @@ extension String {
         
     }
 
+    func reemplazarEspaciosEnBlancoPorTexto() -> String{
+        
+        let x = self
+        
+        var nuevaCadena = String()
+        
+        for char in x.characters{
+            
+            if char == " "{
+                
+                let replace = " a las "
+                
+                nuevaCadena = nuevaCadena + String(replace)
+                
+            }
+                
+            else{
+                
+                nuevaCadena = nuevaCadena + String(char)
+                
+            }
+            
+        }
+        
+        return nuevaCadena
+        
+    }
+
     
     func reemplazarGuionesPorSlash() -> String{
         
