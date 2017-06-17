@@ -309,7 +309,13 @@ class CreateServicioViewController: UITableViewController,UIPickerViewDataSource
         let estatus : NSString = "Por procesar"
         let descripcion : NSString = myTextview as NSString
         let clientId : Int = prefs.integer(forKey: "ID_CLIENTE") as Int
-        
+        let user_ID = 1
+        let client_name = "wilmer"
+        let ejecutor = "N/A"
+        let prioridad = "N/A"
+        let origen = "Movil"
+        let fecha_emision = "N/A"
+        let fecha_ejecucion = "N/A"
 
         
         if validarCampos() == true{
@@ -318,9 +324,12 @@ class CreateServicioViewController: UITableViewController,UIPickerViewDataSource
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
 
             
-            var request = URLRequest(url: URL(string: "\(HttpRuta.ruta)/clients/\(clientId)/solicitudes")!)
+            var request = URLRequest(url: URL(string: "\(HttpRuta.ruta)/clients/\(clientId)/maintenances")!)
             request.httpMethod = "POST"
-            let postString = "location_id=\(location_id)&estatus=\(estatus)&descripcion=\(descripcion)"
+            let postString = "location_id=\(location_id)&user_id=\(user_ID)&client_id=\(clientId)&client_name=\(client_name)&ejecutor=\(ejecutor)&estatus=\(estatus)&descripcion_mant=\(descripcion)&prioridad=\(prioridad)&origen=\(origen)&fecha_emision=\(fecha_emision)&fecha_ejecucion=\(fecha_ejecucion)"
+            
+            print(postString)
+            
             request.httpBody = postString.data(using: .utf8)
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
                 guard let data = data, error == nil else {
@@ -338,7 +347,7 @@ class CreateServicioViewController: UITableViewController,UIPickerViewDataSource
                         self.loadingView.hideLoadingView()
                         UIApplication.shared.isNetworkActivityIndicatorVisible = false
                         
-                        let alert = UIAlertController(title: "¡Ha ocurrido un error!", message:"Por favor revise su conexión a internet", preferredStyle: UIAlertControllerStyle.alert)
+                        let alert = UIAlertController(title: "¡Ha ocurrido un error!", message:"Error 500", preferredStyle: UIAlertControllerStyle.alert)
                         
                         alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
                             
@@ -351,17 +360,18 @@ class CreateServicioViewController: UITableViewController,UIPickerViewDataSource
                 }
                 
                 //Todo salio bn
-                DispatchQueue.main.async(execute: {
-                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                    self.loadingView.hideLoadingView()
-                    _ = self.sweetAlert.showAlert("Completado!", subTitle: "Su orden de mantenimiento ha sido enviada con exito", style: AlertStyle.success)
+                else{
+                    DispatchQueue.main.async(execute: {
+                        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                        self.loadingView.hideLoadingView()
+                        _ = self.sweetAlert.showAlert("Completado!", subTitle: "Su orden de mantenimiento ha sido enviada con exito", style: AlertStyle.success)
                     
-                    let responseString = String(data: data, encoding: .utf8)
-                    print("responseString = \(responseString!)")
+                        let responseString = String(data: data, encoding: .utf8)
+                        print("responseString = \(responseString!)")
                     
-                })
+                    })
                 
-                
+                }
                 //aqui poner el sweet alert de error
             }
             

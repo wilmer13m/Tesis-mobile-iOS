@@ -20,6 +20,7 @@
 		A529F7361EDD19C80054BA57 /* DetailConsumoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A529F7351EDD19C80054BA57 /* DetailConsumoTableViewCell.swift */; };
 		A529F73A1EDD1ADD0054BA57 /* DetailConsumoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A529F7391EDD1ADD0054BA57 /* DetailConsumoTableViewController.swift */; };
 		A536E8851EE66AED001E59F2 /* SweetAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A536E8841EE66AED001E59F2 /* SweetAlert.swift */; };
+		A55896E81EF3A10E00660BC3 /* Maintanences.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55896E71EF3A10E00660BC3 /* Maintanences.swift */; };
 		A562F27C1EE4C7CC008FEBF3 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A562F27B1EE4C7CC008FEBF3 /* LoadingView.swift */; };
 		A562F27E1EE4CD8A008FEBF3 /* MensajeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A562F27D1EE4CD8A008FEBF3 /* MensajeError.swift */; };
 		A562FA2D1EE4EDD000DDE9B0 /* FormularioServicioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A562FA2C1EE4EDD000DDE9B0 /* FormularioServicioTableViewCell.swift */; };
@@ -84,6 +85,7 @@
 		A529F7351EDD19C80054BA57 /* DetailConsumoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailConsumoTableViewCell.swift; sourceTree = "<group>"; };
 		A529F7391EDD1ADD0054BA57 /* DetailConsumoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailConsumoTableViewController.swift; sourceTree = "<group>"; };
 		A536E8841EE66AED001E59F2 /* SweetAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetAlert.swift; sourceTree = "<group>"; };
+		A55896E71EF3A10E00660BC3 /* Maintanences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Maintanences.swift; sourceTree = "<group>"; };
 		A562F27B1EE4C7CC008FEBF3 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		A562F27D1EE4CD8A008FEBF3 /* MensajeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MensajeError.swift; sourceTree = "<group>"; };
 		A562FA2C1EE4EDD000DDE9B0 /* FormularioServicioTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormularioServicioTableViewCell.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				A509F0551EDA28E900F8AC5D /* Setting.swift */,
 				A5E073371EE3D8EE0098A2A8 /* Solicitud.swift */,
 				A58B314E1EF0FA520079A2D8 /* Product.swift */,
+				A55896E71EF3A10E00660BC3 /* Maintanences.swift */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -571,6 +574,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A55896E81EF3A10E00660BC3 /* Maintanences.swift in Sources */,
 				A5E073381EE3D8EE0098A2A8 /* Solicitud.swift in Sources */,
 				A5C159F21EF1F71100AD6E01 /* OrderConsumoTableViewCell.swift in Sources */,
 				A5C159F61EF201D500AD6E01 /* DetailServicioTableViewCell.swift in Sources */,

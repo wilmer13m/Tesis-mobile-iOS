@@ -23,28 +23,28 @@ class ServicioTableViewCell: UITableViewCell {
     }
         
     
-    var solicitud : Solicitud?{
+    var maintenances : Maintanences?{
         
         didSet{
             
-            detailLabel.text = solicitud?.descripcion
+            detailLabel.text = maintenances?.descripcion
             
             //Llenando el label date
-            if solicitud?.created_at != solicitud?.updated_at{
+            if maintenances?.created_at != maintenances?.updated_at{
                 
-                let date = solicitud?.created_at.reemplazarEspaciosEnBlancoPorBarra().reemplazarGuionesPorSlash()
+                let date = maintenances?.created_at.reemplazarEspaciosEnBlancoPorBarra().reemplazarGuionesPorSlash()
                 dateLabel.text = date
                 
             }else{
                 
-                let date = solicitud?.created_at.reemplazarEspaciosEnBlancoPorBarra().reemplazarGuionesPorSlash()
+                let date = maintenances?.created_at.reemplazarEspaciosEnBlancoPorBarra().reemplazarGuionesPorSlash()
                 dateLabel.text = date
             }
             
             //asginando el label title
-            titleLabel.text = solicitud?.estatus
+            titleLabel.text = maintenances?.estatus
             
-            if let status = solicitud?.estatus{
+            if let status = maintenances?.estatus{
                 
                 switch status {
                 case "Por procesar":

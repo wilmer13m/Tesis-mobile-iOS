@@ -117,7 +117,7 @@ class MantenimientosViewController: UITableViewController,CrearServicioDelegate 
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! ServicioTableViewCell
         
         
-        cell.solicitud = solicitudes?.reversed()[indexPath.row]
+     //   cell.solicitud = solicitudes?.reversed()[indexPath.row]
         
         
         return cell

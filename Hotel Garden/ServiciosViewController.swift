@@ -15,6 +15,7 @@ class ServicioViewController: UITableViewController,CrearServicioDelegate {
     let prefs:UserDefaults = UserDefaults.standard
     
     var solicitudes : [Solicitud]?
+    var maintenances : [Maintanences]?
     
     let loadingView = LoadingView(message: "Cargando")
     
@@ -109,7 +110,7 @@ class ServicioViewController: UITableViewController,CrearServicioDelegate {
     
     //MARK:METODOS DEL TABLEVIEW
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return solicitudes?.count ?? 0
+        return maintenances?.count ?? 0
     }
     
     
@@ -118,7 +119,7 @@ class ServicioViewController: UITableViewController,CrearServicioDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! ServicioTableViewCell
         
         
-        cell.solicitud = solicitudes?.reversed()[indexPath.row]
+        cell.maintenances = maintenances?.reversed()[indexPath.row]
         
         
         return cell
@@ -137,8 +138,8 @@ class ServicioViewController: UITableViewController,CrearServicioDelegate {
         let borrar = UITableViewRowAction(style: .normal, title: "Borrar") { action, index in
             print("borrar button tapped")
             
-            let status = self.solicitudes!.reversed()[index.row].estatus
-            let idSolicitud = self.solicitudes!.reversed()[index.row].id
+            let status = self.maintenances!.reversed()[index.row].estatus
+            let idMantenimiento = self.maintenances!.reversed()[index.row].id
             
             if status != "Por procesar"{
                 
@@ -167,7 +168,7 @@ class ServicioViewController: UITableViewController,CrearServicioDelegate {
                     
                     alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.destructive, handler:  { action in
                         
-                        self.deleteMantenimiento(id: idSolicitud)
+                        self.deleteMantenimiento(id: idMantenimiento)
                         
                     }))
                     
@@ -196,7 +197,7 @@ class ServicioViewController: UITableViewController,CrearServicioDelegate {
             
             print(index.row)
             
-            let status = self.solicitudes!.reversed()[index.row].estatus
+            let status = self.maintenances!.reversed()[index.row].estatus
             
             print(status)
             
@@ -219,9 +220,9 @@ class ServicioViewController: UITableViewController,CrearServicioDelegate {
                 
             }else{
                 
-                self.dscr = self.solicitudes!.reversed()[index.row].descripcion
-                self.lugarId = self.solicitudes!.reversed()[index.row].location_id
-                self.id = self.solicitudes!.reversed()[index.row].id
+                self.dscr = self.maintenances!.reversed()[index.row].descripcion
+                self.lugarId = self.maintenances!.reversed()[index.row].location_id
+                self.id = self.maintenances!.reversed()[index.row].id
                 
                 print("la descripcion es:\(self.dscr) y el lugar es: \(self.lugarId)")
                 
@@ -253,7 +254,7 @@ class ServicioViewController: UITableViewController,CrearServicioDelegate {
         
         
         let detailServicioVc = DetailServiciosViewController(style: .grouped)
-        detailServicioVc.solicitud = solicitudes!.reversed()[indexPath.row]
+        detailServicioVc.mantenimiento = maintenances!.reversed()[indexPath.row]
         
         navigationController?.pushViewController(detailServicioVc, animated: true)
         
@@ -280,7 +281,7 @@ class ServicioViewController: UITableViewController,CrearServicioDelegate {
         
         let clientId : Int = prefs.integer(forKey: "ID_CLIENTE") as Int
         
-        let url = URL(string: "\(HttpRuta.ruta)/clients/\(clientId)/solicitudes")
+        let url = URL(string: "\(HttpRuta.ruta)/clients/\(clientId)/maintenances")
         
         print(url!)
         
@@ -304,7 +305,7 @@ class ServicioViewController: UITableViewController,CrearServicioDelegate {
                     alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
                         
                         
-                        if self.solicitudes?.count == nil{
+                        if self.maintenances?.count == nil{
                             //run your function here
                             
                             self.mensajeError.showElements()
@@ -330,28 +331,34 @@ class ServicioViewController: UITableViewController,CrearServicioDelegate {
                     
                     //     print(json)
                     
-                    self.solicitudes = [Solicitud]()
+                    self.maintenances = [Maintanences]()
                     
                     
                     print(json.count)
                     
-                    let solicitudesArray = json["solicitudes"] as? [[String:AnyObject]]
+                    let maintenancesArray = json["solicitudes"] as? [[String:AnyObject]]
                     
-                    if let solicitudes = solicitudesArray {
+                    if let maintenances = maintenancesArray {
                         
-                        for x in solicitudes{
+                        for x in maintenances{
                             
-                            let solicitud = Solicitud()
+                            let maintenances = Maintanences()
                             
-                            solicitud.id = x["id"] as! Int
-                            solicitud.client_id = x["client_id"] as! Int
-                            solicitud.created_at = x["created_at"] as! String
-                            solicitud.estatus = x["estatus"] as! String
-                            solicitud.location_id = x["location_id"] as! Int
-                            solicitud.updated_at = x["updated_at"] as! String
-                            solicitud.descripcion = x["descripcion"] as! String
+                            maintenances.id = x["id"] as! Int
+                            maintenances.user_id = x["user_id"] as! Int
+                            maintenances.client_id = x["client_id"] as! Int
+                            maintenances.estatus = x["estatus"] as! String
+                            maintenances.ejecutor = x["ejecutor"] as! String
+                            maintenances.descripcion = x["descripcion_mant"] as! String
+                            maintenances.prioridad = x["prioridad"] as! String
+                            maintenances.origen = x["origen"] as! String
+                            maintenances.fecha_emision = x["fecha_emision"] as! String
+                            maintenances.fecha_ejecucion = x["fecha_ejecucion"] as! String
+                            maintenances.created_at = x["created_at"] as! String
+                            maintenances.updated_at = x["updated_at"] as! String
+                            maintenances.location_id = x["location_id"] as! Int
                             
-                            self.solicitudes?.append(solicitud)
+                            self.maintenances?.append(maintenances)
                             
                         }
                         
@@ -513,7 +520,7 @@ class ServicioViewController: UITableViewController,CrearServicioDelegate {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         
-        var request = URLRequest(url: URL(string: "\(HttpRuta.ruta)/clients/\(clientId)/solicitudes/\(id)")!)
+        var request = URLRequest(url: URL(string: "\(HttpRuta.ruta)/clients/\(clientId)/maintenances/\(id)")!)
         
         
         request.httpMethod = "DELETE"

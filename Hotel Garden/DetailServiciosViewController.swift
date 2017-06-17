@@ -13,7 +13,7 @@ import StretchHeader
 class DetailServiciosViewController: UITableViewController {
 
     var solicitud = Solicitud()
-    
+    var mantenimiento = Maintanences()
     
     let mensajeError = MensajeError(ImageName: "sin_conexion", Titulo: "Oops!", Mensaje: "No hay conexion a internet")
     let loadingView = LoadingView(message: "Cargando...")
@@ -77,7 +77,7 @@ class DetailServiciosViewController: UITableViewController {
     
     //MARK:METODOS DEL TABLEVIEW
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -108,23 +108,27 @@ class DetailServiciosViewController: UITableViewController {
         switch indexPath.row {
         case 0:
             
-            cell.titleLabel.text = "Lugar:"
-            cell.descripLabel.text = location.nombre
+            cell.titleLabel.text = "Estatus:"
+            cell.descripLabel.text = mantenimiento.estatus
             break
         case 1:
             
             cell.titleLabel.text = "Descripcion:"
-            cell.descripLabel.text = solicitud.descripcion
+            cell.descripLabel.text = mantenimiento.descripcion
             break
         case 2:
-            
-            cell.titleLabel.text = "Estatus:"
-            cell.descripLabel.text = solicitud.estatus
+            cell.titleLabel.text = "Lugar:"
+            cell.descripLabel.text = location.nombre
+
             break
+            
+        case 3:
+            cell.titleLabel.text = "Fecha de creacion:"
+            cell.descripLabel.text = mantenimiento.created_at.reemplazarGuionesPorSlash().reemplazarEspaciosEnBlancoPorTexto()
         default:
             
-            cell.titleLabel.text = "Fecha:"
-            cell.descripLabel.text = solicitud.updated_at.reemplazarGuionesPorSlash().reemplazarEspaciosEnBlancoPorTexto()
+            cell.titleLabel.text = "Ultima vez actualizado:"
+            cell.descripLabel.text = mantenimiento.updated_at.reemplazarGuionesPorSlash().reemplazarEspaciosEnBlancoPorTexto()
             break
         }
         
@@ -146,7 +150,9 @@ class DetailServiciosViewController: UITableViewController {
         loadingView.showMenuLoad()
         
         
-        let url = URL(string: "\(HttpRuta.ruta)/locations/\(solicitud.location_id)")
+        let url = URL(string: "\(HttpRuta.ruta)/locations/\(mantenimiento.location_id)")
+        
+    
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
@@ -188,7 +194,10 @@ class DetailServiciosViewController: UITableViewController {
 
                     let dataLocation = json["location"] as! [String:AnyObject]
                     
+                    print(dataLocation)
                     self.location.nombre = dataLocation["nombre"] as! String
+                    
+                    
                     self.location.descripcion = dataLocation["descripcion"] as! String
                     
         
@@ -199,7 +208,7 @@ class DetailServiciosViewController: UITableViewController {
                         let indexPaths = NSIndexPath(item: 0, section: 0)
                         self.tableView.reloadRows(at: [indexPaths as IndexPath], with: .none)
 
-//                        self.tableView.reloadData()
+                        self.tableView.reloadData()
                         self.loadingView.hideLoadingView()
                         UIApplication.shared.isNetworkActivityIndicatorVisible = false
                         

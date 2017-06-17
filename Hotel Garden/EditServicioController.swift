@@ -15,6 +15,7 @@ class EditServicioViewController: UITableViewController,UIPickerViewDataSource, 
     var lugarNombre = String()
     var lugarId = Int()
     var idSolicitud = Int()
+    var idMaintenances = Int()
     
     
     let cellId1 = "cellId"
@@ -362,14 +363,14 @@ class EditServicioViewController: UITableViewController,UIPickerViewDataSource, 
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
             
             
-            var request = URLRequest(url: URL(string: "\(HttpRuta.ruta)/clients/\(clientId)/solicitudes/\(idSolicitud)")!)
+            var request = URLRequest(url: URL(string: "\(HttpRuta.ruta)/clients/\(clientId)/maintenances/\(idSolicitud)")!)
             
            // print("http://localhost:8000/api/clients/\(clientId)/solicitudes/\(idSolicitud)")
             
             
             request.httpMethod = "PUT"
             request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "content-type")
-            let postString = "location_id=\(lugar_id)&descripcion=\(descripPut)"
+            let postString = "location_id=\(lugar_id)&descripcion_mant=\(descripPut)"
             request.httpBody = postString.data(using: .ascii)
 
             
