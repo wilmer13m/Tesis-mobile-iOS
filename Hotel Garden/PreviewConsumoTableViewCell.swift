@@ -63,7 +63,7 @@ class PreviewConsumoTableViewCell: UITableViewCell {
         
         let label = UILabel()
         label.text = "parrilla mar y tierra para 2 personas especial de la casa con vino incluido, para las 08:00pm..."
-        label.numberOfLines = 2
+        label.numberOfLines = 3
         label.font = UIFont.boldSystemFont(ofSize: 13)
         label.textColor = UIColor.rgb(155, green: 161, blue: 171)
         label.translatesAutoresizingMaskIntoConstraints = false

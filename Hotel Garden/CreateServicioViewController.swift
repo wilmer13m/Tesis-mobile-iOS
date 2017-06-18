@@ -347,7 +347,7 @@ class CreateServicioViewController: UITableViewController,UIPickerViewDataSource
                         self.loadingView.hideLoadingView()
                         UIApplication.shared.isNetworkActivityIndicatorVisible = false
                         
-                        let alert = UIAlertController(title: "¡Ha ocurrido un error!", message:"Error 500", preferredStyle: UIAlertControllerStyle.alert)
+                        let alert = UIAlertController(title: "¡Error 500!", message:"error interno en el servidor", preferredStyle: UIAlertControllerStyle.alert)
                         
                         alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
                             
@@ -410,6 +410,8 @@ class CreateServicioViewController: UITableViewController,UIPickerViewDataSource
     }
     
     
+    
+    //MARK:METODO DEL PROTOCOLO DE SWEETALERT
     func sweetAlertOkButtonPressed() {
         
         band = 1

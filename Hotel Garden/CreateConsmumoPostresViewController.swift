@@ -247,24 +247,35 @@ class CreateConsmumoPostresViewController: UITableViewController {
     //MARK: METODO PARA IR AL SIGUIENTE CONTROLADOR
     func siguiente(){
         
-        for x in currentOrder{
+        if currentOrder.count == 0{
+        
             
+            let alert = UIAlertController(title: "Error", message:"Debe al menos haber seleccionado un articulo para continuar", preferredStyle: UIAlertControllerStyle.alert)
+            
+            alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
+                
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
+         
+
+        }else{
+    
+            for x in currentOrder{
+    
             print("\(x.0.nombre) \(x.1)")
         
-        }
-        
-        if currentOrder.count == 0 {
-        
-            print("debe seleccionar al menos un item de los anteriores")
-        
-        }else{
+            }
         
             let previewOrdenConsumoVc = PreviewOrdenConsumoViewController(style: .grouped)
             previewOrdenConsumoVc.currentOrder = currentOrder
             navigationController?.pushViewController(previewOrdenConsumoVc, animated: true)
+            
         }
     
+        
     }
+    
     
     func reloadData(){
         

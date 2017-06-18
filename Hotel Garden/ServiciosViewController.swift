@@ -388,7 +388,7 @@ class ServicioViewController: UITableViewController,CrearServicioDelegate {
                 
             }
             
-            }.resume()
+        }.resume()
         
     }
     
@@ -506,7 +506,7 @@ class ServicioViewController: UITableViewController,CrearServicioDelegate {
                 
             }
             
-            }.resume()
+        }.resume()
         
     }
     

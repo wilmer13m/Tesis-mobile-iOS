@@ -21,6 +21,9 @@
 		A529F73A1EDD1ADD0054BA57 /* DetailConsumoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A529F7391EDD1ADD0054BA57 /* DetailConsumoTableViewController.swift */; };
 		A536E8851EE66AED001E59F2 /* SweetAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A536E8841EE66AED001E59F2 /* SweetAlert.swift */; };
 		A55896E81EF3A10E00660BC3 /* Maintanences.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55896E71EF3A10E00660BC3 /* Maintanences.swift */; };
+		A55896EA1EF4FE2300660BC3 /* FoodOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55896E91EF4FE2300660BC3 /* FoodOrder.swift */; };
+		A55896EC1EF502BA00660BC3 /* Details.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55896EB1EF502BA00660BC3 /* Details.swift */; };
+		A55896EE1EF5038C00660BC3 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55896ED1EF5038C00660BC3 /* Order.swift */; };
 		A562F27C1EE4C7CC008FEBF3 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A562F27B1EE4C7CC008FEBF3 /* LoadingView.swift */; };
 		A562F27E1EE4CD8A008FEBF3 /* MensajeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A562F27D1EE4CD8A008FEBF3 /* MensajeError.swift */; };
 		A562FA2D1EE4EDD000DDE9B0 /* FormularioServicioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A562FA2C1EE4EDD000DDE9B0 /* FormularioServicioTableViewCell.swift */; };
@@ -86,6 +89,9 @@
 		A529F7391EDD1ADD0054BA57 /* DetailConsumoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailConsumoTableViewController.swift; sourceTree = "<group>"; };
 		A536E8841EE66AED001E59F2 /* SweetAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetAlert.swift; sourceTree = "<group>"; };
 		A55896E71EF3A10E00660BC3 /* Maintanences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Maintanences.swift; sourceTree = "<group>"; };
+		A55896E91EF4FE2300660BC3 /* FoodOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodOrder.swift; sourceTree = "<group>"; };
+		A55896EB1EF502BA00660BC3 /* Details.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Details.swift; sourceTree = "<group>"; };
+		A55896ED1EF5038C00660BC3 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		A562F27B1EE4C7CC008FEBF3 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		A562F27D1EE4CD8A008FEBF3 /* MensajeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MensajeError.swift; sourceTree = "<group>"; };
 		A562FA2C1EE4EDD000DDE9B0 /* FormularioServicioTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormularioServicioTableViewCell.swift; sourceTree = "<group>"; };
@@ -167,11 +173,14 @@
 		A509F0491EDA017600F8AC5D /* models */ = {
 			isa = PBXGroup;
 			children = (
+				A55896EB1EF502BA00660BC3 /* Details.swift */,
+				A55896E91EF4FE2300660BC3 /* FoodOrder.swift */,
 				A562FA2E1EE50E4600DDE9B0 /* Location.swift */,
+				A55896E71EF3A10E00660BC3 /* Maintanences.swift */,
+				A55896ED1EF5038C00660BC3 /* Order.swift */,
+				A58B314E1EF0FA520079A2D8 /* Product.swift */,
 				A509F0551EDA28E900F8AC5D /* Setting.swift */,
 				A5E073371EE3D8EE0098A2A8 /* Solicitud.swift */,
-				A58B314E1EF0FA520079A2D8 /* Product.swift */,
-				A55896E71EF3A10E00660BC3 /* Maintanences.swift */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -580,6 +589,7 @@
 				A5C159F61EF201D500AD6E01 /* DetailServicioTableViewCell.swift in Sources */,
 				A529F7361EDD19C80054BA57 /* DetailConsumoTableViewCell.swift in Sources */,
 				A509F0581EDA3E5600F8AC5D /* LoginViewController.swift in Sources */,
+				A55896EC1EF502BA00660BC3 /* Details.swift in Sources */,
 				A562F27E1EE4CD8A008FEBF3 /* MensajeError.swift in Sources */,
 				A5FCB7641EE718350041A8C8 /* EditServicioController.swift in Sources */,
 				A509F0501EDA027F00F8AC5D /* HomeTableViewCells.swift in Sources */,
@@ -600,8 +610,10 @@
 				A5E0733A1EE3E3DD0098A2A8 /* MantenimientoTableViewCell.swift in Sources */,
 				A5C159EE1EF1CE7A00AD6E01 /* CreateConsmumoPostresViewController.swift in Sources */,
 				A562FA2D1EE4EDD000DDE9B0 /* FormularioServicioTableViewCell.swift in Sources */,
+				A55896EA1EF4FE2300660BC3 /* FoodOrder.swift in Sources */,
 				A5ABF84E1ED9306F003FA132 /* Hotel_Garden.xcdatamodeld in Sources */,
 				A5C159F41EF1FD8D00AD6E01 /* DetailServiciosViewController.swift in Sources */,
+				A55896EE1EF5038C00660BC3 /* Order.swift in Sources */,
 				A5C159EA1EF1AD0300AD6E01 /* CreateConsumoViewController.swift in Sources */,
 				A509F05A1EDA468D00F8AC5D /* LoginView.swift in Sources */,
 				A509F04E1EDA01B500F8AC5D /* helpers.swift in Sources */,
