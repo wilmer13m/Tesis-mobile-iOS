@@ -183,58 +183,49 @@ class ConsumoViewController: UITableViewController {
         
         
         
-//        let editar = UITableViewRowAction(style: .normal, title: "Editar") { action, index in
-//            print("editar button tapped")
-//            
-//            print(index.row)
-//            
-//            let status = self.maintenances!.reversed()[index.row].estatus
-//            
-//            print(status)
-//            
-//            if status != "Por procesar"{
-//                
-//                DispatchQueue.main.async(execute: {
-//                    
-//                    let alert = UIAlertController(title: "¡Error!", message:"las ordenes con estatus: '\(status)' no pueden ser modificadas", preferredStyle: UIAlertControllerStyle.alert)
-//                    
-//                    alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
-//                        
-//                        
-//                    }))
-//                    
-//                    self.present(alert, animated: true, completion: nil)
-//                    
-//                    
-//                    
-//                })
-//                
-//            }else{
-//                
-//                self.dscr = self.maintenances!.reversed()[index.row].descripcion
-//                self.lugarId = self.maintenances!.reversed()[index.row].location_id
-//                self.id = self.maintenances!.reversed()[index.row].id
-//                
-//                print("la descripcion es:\(self.dscr) y el lugar es: \(self.lugarId)")
-//                
-//                self.editarMantenimientoVc.descrip = self.dscr
-//                self.editarMantenimientoVc.lugarId = self.lugarId
-//                self.editarMantenimientoVc.idSolicitud = self.id
-//                
-//                self.navigationController?.pushViewController(self.editarMantenimientoVc, animated: true)
-//                
-//            }
-//            
-//            
-//            
-//            
-//        }
-//        
-//        editar.backgroundColor = .azul()
+        let editar = UITableViewRowAction(style: .normal, title: "Editar") { action, index in
+            print("editar button tapped")
+            
+            print(index.row)
+            
+            let status = self.foodOrders![index.row].estatus
+            
+            print(status)
+            
+            if status != "Por procesar"{
+                
+                DispatchQueue.main.async(execute: {
+                    
+                    let alert = UIAlertController(title: "¡Error!", message:"las ordenes con estatus: '\(status)' no pueden ser modificadas", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
+                        
+                        
+                    }))
+                    
+                    self.present(alert, animated: true, completion: nil)
+                    
+                    
+                    
+                })
+                
+            }else{
+                
+                let updateConsumoComidas = UpdateConsumoComidasViewController(style: .grouped)
+                updateConsumoComidas.foodOrder = self.foodOrders![index.row]
+                
+                self.navigationController?.pushViewController(updateConsumoComidas, animated: true)
+                
+            }
+            
+        }
         
+        editar.backgroundColor = .azul()
         
-        return [borrar]
+        return [borrar,editar]
     }
+    
+    
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true

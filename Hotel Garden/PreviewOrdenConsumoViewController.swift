@@ -84,17 +84,17 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
         case 0:
             
             cell.titleLabel.text = comidasArray[indexPath.row].0.nombre
-            cell.cantidadLabel.text = "\(comidasArray[indexPath.row].1)"
+            cell.cantidadLabel.text = "\(comidasArray[indexPath.row].1.replacingOccurrences(of: "Cant:", with: ""))"
             break
             
         case 1:
             cell.titleLabel.text = bebidasArray[indexPath.row].0.nombre
-            cell.cantidadLabel.text = "\(bebidasArray[indexPath.row].1)"
+            cell.cantidadLabel.text = "\(bebidasArray[indexPath.row].1.replacingOccurrences(of: "Cant:", with: ""))"
             break
             
         default:
             cell.titleLabel.text = postresArray[indexPath.row].0.nombre
-            cell.cantidadLabel.text = "\(postresArray[indexPath.row].1)"
+            cell.cantidadLabel.text = "\(postresArray[indexPath.row].1.replacingOccurrences(of: "Cant:", with: ""))"
         }
         
         return cell
@@ -297,7 +297,7 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
             
             let product_id = x.0.id
             let descripcion_producto = x.0.nombre
-            let cantidad = x.1
+            let cantidad = x.1.replacingOccurrences(of: "Cant:", with: "")
             let food_order_id = id
             
             loadingView.showMenuLoad()
