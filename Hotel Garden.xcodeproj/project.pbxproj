@@ -13,6 +13,8 @@
 		A509F0561EDA28E900F8AC5D /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A509F0551EDA28E900F8AC5D /* Setting.swift */; };
 		A509F0581EDA3E5600F8AC5D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A509F0571EDA3E5600F8AC5D /* LoginViewController.swift */; };
 		A509F05A1EDA468D00F8AC5D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A509F0591EDA468D00F8AC5D /* LoginView.swift */; };
+		A50C80371EF8A14300A03D31 /* ConsumoLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C80361EF8A14300A03D31 /* ConsumoLocationViewController.swift */; };
+		A50C80391EF8A1C500A03D31 /* Reservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C80381EF8A1C500A03D31 /* Reservation.swift */; };
 		A51469831EF7439700220094 /* UpdateConsumoComidasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51469821EF7439700220094 /* UpdateConsumoComidasViewController.swift */; };
 		A51469851EF7547100220094 /* updateConsumoBebidasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51469841EF7547100220094 /* updateConsumoBebidasViewController.swift */; };
 		A51469871EF757F100220094 /* UpdateConsumoPostresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51469861EF757F100220094 /* UpdateConsumoPostresViewController.swift */; };
@@ -85,6 +87,8 @@
 		A509F0551EDA28E900F8AC5D /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		A509F0571EDA3E5600F8AC5D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A509F0591EDA468D00F8AC5D /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		A50C80361EF8A14300A03D31 /* ConsumoLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsumoLocationViewController.swift; sourceTree = "<group>"; };
+		A50C80381EF8A1C500A03D31 /* Reservation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reservation.swift; sourceTree = "<group>"; };
 		A51469821EF7439700220094 /* UpdateConsumoComidasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateConsumoComidasViewController.swift; sourceTree = "<group>"; };
 		A51469841EF7547100220094 /* updateConsumoBebidasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = updateConsumoBebidasViewController.swift; sourceTree = "<group>"; };
 		A51469861EF757F100220094 /* UpdateConsumoPostresViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateConsumoPostresViewController.swift; sourceTree = "<group>"; };
@@ -189,6 +193,7 @@
 				A58B314E1EF0FA520079A2D8 /* Product.swift */,
 				A509F0551EDA28E900F8AC5D /* Setting.swift */,
 				A5E073371EE3D8EE0098A2A8 /* Solicitud.swift */,
+				A50C80381EF8A1C500A03D31 /* Reservation.swift */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -217,6 +222,7 @@
 				A5C159EB1EF1C74A00AD6E01 /* CreateConsumoBebidasViewController.swift */,
 				A5C159E91EF1AD0300AD6E01 /* CreateConsumoViewController.swift */,
 				A5C159ED1EF1CE7A00AD6E01 /* CreateConsmumoPostresViewController.swift */,
+				A50C80361EF8A14300A03D31 /* ConsumoLocationViewController.swift */,
 				A5E0733B1EE3E8BF0098A2A8 /* CreateServicioViewController.swift */,
 				A529F7391EDD1ADD0054BA57 /* DetailConsumoTableViewController.swift */,
 				A5C159F31EF1FD8D00AD6E01 /* DetailServiciosViewController.swift */,
@@ -621,11 +627,13 @@
 				A58B314D1EF0D66A0079A2D8 /* FormularioConsumoTableViewCell.swift in Sources */,
 				A562FA2F1EE50E4600DDE9B0 /* Location.swift in Sources */,
 				A51469871EF757F100220094 /* UpdateConsumoPostresViewController.swift in Sources */,
+				A50C80391EF8A1C500A03D31 /* Reservation.swift in Sources */,
 				A529F7301EDB8F140054BA57 /* ServiciosViewController.swift in Sources */,
 				A5E0733A1EE3E3DD0098A2A8 /* MantenimientoTableViewCell.swift in Sources */,
 				A5C159EE1EF1CE7A00AD6E01 /* CreateConsmumoPostresViewController.swift in Sources */,
 				A562FA2D1EE4EDD000DDE9B0 /* FormularioServicioTableViewCell.swift in Sources */,
 				A55896EA1EF4FE2300660BC3 /* FoodOrder.swift in Sources */,
+				A50C80371EF8A14300A03D31 /* ConsumoLocationViewController.swift in Sources */,
 				A5ABF84E1ED9306F003FA132 /* Hotel_Garden.xcdatamodeld in Sources */,
 				A5C159F41EF1FD8D00AD6E01 /* DetailServiciosViewController.swift in Sources */,
 				A55896EE1EF5038C00660BC3 /* Order.swift in Sources */,

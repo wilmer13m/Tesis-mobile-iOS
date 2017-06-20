@@ -1,50 +1,58 @@
 //
-//  CreateConsmumoPostresViewController.swift
+//  ConsumoLocationViewController.swift
 //  Hotel Garden
 //
-//  Created by Wilmer Mendoza on 14/6/17.
+//  Created by Wilmer Mendoza on 19/6/17.
 //  Copyright © 2017 Wilmer Mendoza. All rights reserved.
 //
 
 import UIKit
 
-class CreateConsmumoPostresViewController: UITableViewController {
+class ConsumoLocationViewController: UITableViewController {
 
+    
     //var que traigo del controlador anterior
     var currentOrder = [(Product,String)]()
     
+
     
     let cellId = "cellId"
     
     let loadingView = LoadingView(message: "Cargando")
     let mensajeError = MensajeError(ImageName: "sin_conexion", Titulo: "Oops!", Mensaje: "No hay conexion a internet")
     
-    var productos : [Product]?
+    let locations = [("Piscina",1),("Habitacion",2),("Restaurant",5)]
+    var lugar = (String(),Int())
+    var aux = 0
+    let reservacion = Reservation()
+
+    let prefs:UserDefaults = UserDefaults.standard
+
     
-    var cantidad = String()    
     
-    override func viewDidLoad() {
+     override func viewDidLoad() {
         super.viewDidLoad()
 
         //SETTING TABLEVIEW
-        tableView.register(FormularioConsumoTableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
         
         tableView.bounces = false
         
-        tableView.allowsMultipleSelectionDuringEditing = true
-        tableView.setEditing(true, animated: false)
+        
         
         //SETTING NAVBAR
-        navigationItem.title = "Nueva orden(3/3)"
+        navigationItem.title = "Nueva orden(4/4)"
         navigationController?.navigationBar.tintColor = .white
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named:"arrow"), style: .plain, target: self, action: #selector(self.siguiente))
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Atras", style:UIBarButtonItemStyle.plain, target: nil, action: nil)
         
-        fetchingPostres()
+        let id_client:Int = prefs.integer(forKey: "ID_CLIENTE") as Int
+
+        fetchingReservation(clientId: id_client)
+    
     
     }
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -52,55 +60,22 @@ class CreateConsmumoPostresViewController: UITableViewController {
     }
     
     
-    
-    
     //MARK: METODO DEL TABLEVIEW
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return productos?.count ?? 0
+        return locations.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! FormularioConsumoTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId)
         
-        
-        cell.mySteeper.touchUpInside = { steeper in
-            
-            self.cantidad = "\(Int(steeper.value))"
-            
-            cell.cantidadLabel.text = "Cant:\(Int(steeper.value))"
-            
-            if cell.isSelected == true{
-                
-                print("el numero de ordenes es: \(self.currentOrder.count)")
-                
-                var i = 0
-                
-                for x in self.currentOrder{
-                    
-                    if (x.0.nombre == cell.titleLabel.text!){
-                        
-                        print(self.currentOrder[i].0.nombre)
-                        
-                        self.currentOrder[i].1 = self.cantidad
-                    }
-                    
-                    i = i + 1
-                    
-                    print("entre \(i) veces al ciclo")
-                    
-                }
-                print("celda seleccionada")
-            }
-            
-        }
-        
-        cell.titleLabel.text = productos?[indexPath.row].nombre
-        return cell
+        cell?.selectionStyle = .blue //Or make label red
+        cell?.textLabel?.text = locations[indexPath.row].0
+        return cell!
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return 60
+        return 44
         
         
     }
@@ -111,41 +86,35 @@ class CreateConsmumoPostresViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "postres"
+        return "Lugar de despacho para la orden"
     }
     
+
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let currentCell = tableView.cellForRow(at: indexPath) as! FormularioConsumoTableViewCell
-        
-        currentOrder.append((productos![indexPath.row], currentCell.cantidadLabel.text!))
-        
+        print("hola")
+        aux = 1
+        lugar = locations[indexPath.row]
+        tableView.cellForRow(at: indexPath as IndexPath)?.accessoryType = .checkmark
+
     }
-    
-    
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        
-        let currentId = productos?[indexPath.row].id
-        
-        currentOrder = currentOrder.filter { $0.0.id != currentId }
-        
-        
-        
+        tableView.cellForRow(at: indexPath as IndexPath)?.accessoryType = .none
+
     }
     
+
+    //MARK: METODO PARA TRAER LA DATA DE LA RESERVATION
+    func fetchingReservation(clientId id : Int){
     
-    //MARK:FETCHING DATA
-    func fetchingPostres(){
-        
         print("entre al fetching")
         
         mensajeError.hideElements()
         loadingView.showMenuLoad()
         
         
-        let url = URL(string: "\(HttpRuta.ruta)/products")
+        let url = URL(string: "\(HttpRuta.ruta)/clients/\(id)/reservations")
         
         print(url!)
         
@@ -166,16 +135,13 @@ class CreateConsmumoPostresViewController: UITableViewController {
                     let alert = UIAlertController(title: "¡Ha ocurrido un error!", message:"Por favor revise su conexión a internet", preferredStyle: UIAlertControllerStyle.alert)
                     
                     alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
-                        
-                        
-                        if self.productos?.count == nil{
+                    
                             //run your function here
                             
                             self.mensajeError.showElements()
                             self.mensajeError.showView()
                             self.mensajeError.reloadButton.addTarget(self, action: #selector(self.reloadData), for: .touchDown)
                             self.tableView.isHidden = true
-                        }
                     }))
                     
                     self.present(alert, animated: true, completion: nil)
@@ -190,29 +156,17 @@ class CreateConsmumoPostresViewController: UITableViewController {
             
             do{
                 
-                if let json = try JSONSerialization.jsonObject(with: data!, options:[]) as? [[String:AnyObject]] {
-                    
-                    //     print(json)
-                    
-                    self.productos = [Product]()
+                if let json = try JSONSerialization.jsonObject(with: data!, options:[]) as? [String:AnyObject] {
                     
                     
-                    for prod in json{
-                        
-                        let producto = Product()
-                        
-                        let tipo = prod["tipo"] as! String
-                        
-                        if tipo == "A"{
-                            
-                            producto.id = prod["id"] as! Int
-                            producto.nombre = prod["nombre"] as! String
-                            producto.tipo = tipo
-                            
-                            self.productos?.append(producto)
-                        }
-                        
+                    let  dataReservacion = json["reservacion"] as! [[String:AnyObject]]
+                    
+                    for x in dataReservacion{
+                        self.reservacion.id = x["id"] as! Int
+                        self.reservacion.room_id = x["room_id"] as! Int
                     }
+                    
+                  
                     
                     //recargo la data del collectionView de manera asincrona
                     DispatchQueue.main.async(execute: {
@@ -240,25 +194,48 @@ class CreateConsmumoPostresViewController: UITableViewController {
             
         }.resume()
         
-        
     }
     
     
-    //MARK: METODO PARA IR AL SIGUIENTE CONTROLADOR
     func siguiente(){
-        
-        let consumoLocationVc = ConsumoLocationViewController(style: .grouped)
-        consumoLocationVc.currentOrder = currentOrder
-        navigationController?.pushViewController(consumoLocationVc, animated: true)
-        
+    
+        if currentOrder.count == 0 || aux == 0{
+            
+            
+            let alert = UIAlertController(title: "Error", message:"Debe al menos haber seleccionado un articulo para continuar", preferredStyle: UIAlertControllerStyle.alert)
+            
+            alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
+                
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
+            
+            
+        }else{
+            
+            for x in currentOrder{
+                
+                print("\(x.0.nombre) \(x.1)")
+                
+            }
+            
+            let previewOrdenConsumoVc = PreviewOrdenConsumoViewController(style: .grouped)
+            previewOrdenConsumoVc.currentOrder = currentOrder
+            previewOrdenConsumoVc.reservation = reservacion
+            previewOrdenConsumoVc.lugar = lugar
+            navigationController?.pushViewController(previewOrdenConsumoVc, animated: true)
+            
+        }
+    
+    
     }
+    
     
     
     func reloadData(){
-        
-        fetchingPostres()
+    
+        fetchingReservation(clientId: 1)
     
     }
 
-    
 }

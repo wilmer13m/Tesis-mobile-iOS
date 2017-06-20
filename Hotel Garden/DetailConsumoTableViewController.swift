@@ -23,6 +23,7 @@ class DetailConsumoTableViewController: UITableViewController {
     
     var header : StretchHeader!
 
+    var nombreLugar = String()
     
     var comidasArray = [Product]()
     var postresArray = [Product]()
@@ -59,7 +60,7 @@ class DetailConsumoTableViewController: UITableViewController {
     
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 5
     }
     
     
@@ -76,6 +77,10 @@ class DetailConsumoTableViewController: UITableViewController {
         case 2:
             
             return "Postres"
+        
+        case 3:
+            
+            return "Lugar"
             
         default:
             return "Fecha"
@@ -97,7 +102,7 @@ class DetailConsumoTableViewController: UITableViewController {
             return postresArray.count
             
         default:
-            return postresArray.count
+            return 1
         }
         
     }
@@ -123,6 +128,10 @@ class DetailConsumoTableViewController: UITableViewController {
         case 2:
             cell.titleLabel.text = postresArray[indexPath.row].nombre
             cell.cantidadLabel.text = "\(postresArray[indexPath.row].cant_prod)"
+            
+        case 3:
+            cell.titleLabel.text = nombreLugar
+            cell.cantidadLabel.text = " "
         default:
             cell.titleLabel.text = foodOrder.created_at
             cell.cantidadLabel.text = " "
@@ -216,6 +225,7 @@ class DetailConsumoTableViewController: UITableViewController {
 
                     //recargo la data del collectionView de manera asincrona
                     DispatchQueue.main.async(execute: {
+                        self.location(idLocation: self.foodOrder.location_id)
                         self.tableView.reloadData()
                         self.loadingView.hideLoadingView()
                         UIApplication.shared.isNetworkActivityIndicatorVisible = false
@@ -237,6 +247,89 @@ class DetailConsumoTableViewController: UITableViewController {
             
         }.resume()
     
+    
+    }
+    
+    
+    func location(idLocation id : Int){
+    
+        print("entre al fetching")
+        
+        mensajeError.hideElements()
+        loadingView.showMenuLoad()
+        
+        
+        let url = URL(string: "\(HttpRuta.ruta)/locations/\(id)")
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
+        URLSession.shared.dataTask(with: url!) {(data, response, error) in
+            
+            guard data != nil else {
+                print("error de data: \(error!)")
+                
+                DispatchQueue.main.async(execute: {
+                    
+                    self.loadingView.hideLoadingView()
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                    
+                    let alert = UIAlertController(title: "¡Ha ocurrido un error!", message:"Por favor revise su conexión a internet", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
+                        
+                        
+                        //run your function here
+                        
+                        self.mensajeError.showElements()
+                        self.mensajeError.showView()
+                        self.mensajeError.reloadButton.addTarget(self, action: #selector(self.reloadData), for: .touchDown)
+                        self.tableView.isHidden = true
+                        
+                    }))
+                    
+                    self.present(alert, animated: true, completion: nil)
+                    
+                })
+                
+                return
+                
+            }
+            
+            
+            do{
+                
+                if let json = try JSONSerialization.jsonObject(with: data!, options:[]) as? [String:AnyObject] {
+                    
+                    
+                    print(json.count)
+                    
+                    let locationData = json["location"] as! [String:AnyObject]
+                    
+                    self.nombreLugar = locationData["nombre"] as! String
+                    
+                    //recargo la data del collectionView de manera asincrona
+                    DispatchQueue.main.async(execute: {
+                        self.tableView.reloadData()
+                        self.loadingView.hideLoadingView()
+                        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                        
+                    })
+                    
+                }
+                
+            } catch let jsonError {
+                print("error en el json: \(jsonError)")
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                self.loadingView.hideLoadingView()
+                self.mensajeError.showElements()
+                self.mensajeError.showView()
+                self.mensajeError.reloadButton.addTarget(self, action: #selector(self.reloadData), for: .touchDown)
+                self.tableView.isHidden = true
+                
+            }
+            
+            }.resume()
+
     
     }
     
@@ -265,6 +358,10 @@ class DetailConsumoTableViewController: UITableViewController {
         header.updateScrollViewOffset(scrollView)
         
     }
+    
+    
+    
+    
     
     func reloadData(){
     

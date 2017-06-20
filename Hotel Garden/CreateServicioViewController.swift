@@ -20,7 +20,6 @@ class CreateServicioViewController: UITableViewController,UIPickerViewDataSource
     let cellId2 = "cellId2"
     let cellId3 = "cellId3"
     
-   // let urlLocal = "http://192.168.43.120/api"
     
     let mensajeError = MensajeError(ImageName: "sin_conexion", Titulo: "Oops!", Mensaje: "No hay conexion a internet")
     let loadingView = LoadingView(message: "Cargando...")

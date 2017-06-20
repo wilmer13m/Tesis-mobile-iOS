@@ -13,10 +13,13 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
     
     //var que traigo del controlador anterior
     var currentOrder = [(Product,String)]()
+    var reservation = Reservation()
+    var lugar = (String(),Int())
     
     
     //var que no traigo del contralador anterior
     let cellId = "cellId"
+    let cellId2 = "cellId2"
 
     var comidasArray = [(Product,String)]()
     var bebidasArray = [(Product,String)]()
@@ -40,6 +43,7 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
         sweetAlert.sweetDelegate = self
         
         tableView.register(OrderConsumoTableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId2)
 
         comidasArray = currentOrder.filter({ $0.0.tipo == "B" })
         bebidasArray = currentOrder.filter({ $0.0.tipo == "C" })
@@ -69,9 +73,12 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
             
         case 1:
             return bebidasArray.count
-            
-        default:
+        
+        case 2:
             return postresArray.count
+        default:
+            
+            return 1
         }
     }
     
@@ -91,10 +98,15 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
             cell.titleLabel.text = bebidasArray[indexPath.row].0.nombre
             cell.cantidadLabel.text = "\(bebidasArray[indexPath.row].1.replacingOccurrences(of: "Cant:", with: ""))"
             break
-            
-        default:
+        
+        case 2:
             cell.titleLabel.text = postresArray[indexPath.row].0.nombre
             cell.cantidadLabel.text = "\(postresArray[indexPath.row].1.replacingOccurrences(of: "Cant:", with: ""))"
+            break
+            
+        default:
+            cell.titleLabel.text = lugar.0
+            cell.cantidadLabel.text = " "
         }
         
         return cell
@@ -111,15 +123,18 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
             
             return "Bebidas"
             
-        default:
+        case 2:
             return "Postres"
+            
+        default:
+            return "Lugar"
         }
         
     }
     
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
 
@@ -178,12 +193,12 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
     //MARK:METODO PARA CREAR UNA FOODORDER
     func createFoodOrder(){
     
-        let reservation_id = 1 //FALTA
+        let reservation_id = reservation.id //FALTA
         let client_id : Int = prefs.integer(forKey: "ID_CLIENTE") as Int
         let origin_id = 1 //siempre
         let user_id = 1 //SIEMPRE
-        let room_id = 2//FALTA
-        let location_id = 2 //HABITACIONES
+        let room_id = reservation.room_id//FALTA
+        let location_id = lugar.1 //HABITACIONES
         let estatus = "Por procesar"
         
         var foodOrderId = Int()
@@ -373,13 +388,6 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
     
     
     
-    
-    //MARK: METODO PARA TRAER LA DATA DE UNA RESERVACION
-    func fetchReservas(){
-    
-        
-    
-    }
     
     
     func sweetAlertOkButtonPressed() {

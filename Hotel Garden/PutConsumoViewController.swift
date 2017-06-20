@@ -331,11 +331,8 @@ class PutConsumoViewController: UITableViewController,SweetAlertDelegate {
         
         }
         
-        
         print("toque el boton")
-        
-        
-        
+                
     }
     
     
