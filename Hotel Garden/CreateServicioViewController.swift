@@ -309,7 +309,7 @@ class CreateServicioViewController: UITableViewController,UIPickerViewDataSource
         let descripcion : NSString = myTextview as NSString
         let clientId : Int = prefs.integer(forKey: "ID_CLIENTE") as Int
         let user_ID = 1
-        let client_name = "wilmer"
+        let client_name = "*"
         let ejecutor = "N/A"
         let prioridad = "N/A"
         let origen = "Movil"

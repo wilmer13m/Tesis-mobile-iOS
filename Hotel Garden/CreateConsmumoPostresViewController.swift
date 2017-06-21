@@ -203,7 +203,7 @@ class CreateConsmumoPostresViewController: UITableViewController {
                         
                         let tipo = prod["tipo"] as! String
                         
-                        if tipo == "A"{
+                        if tipo == "3"{
                             
                             producto.id = prod["id"] as! Int
                             producto.nombre = prod["nombre"] as! String

@@ -96,7 +96,7 @@ class HomeViewController: UITableViewController {
         
         switch indexPath.row {
         case 0:
-            let consumoViewController = ConsumoViewController(style: .plain)
+            let consumoViewController = ConsumosTableViewController(style: .plain)
             self.navigationController?.pushViewController(consumoViewController, animated: true)
             
             break

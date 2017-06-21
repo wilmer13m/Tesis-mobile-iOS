@@ -58,7 +58,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             //guardando el client id en el prefs
             let prefs:UserDefaults = UserDefaults.standard
             
-            prefs.set(1, forKey: "ID_CLIENTE")
+            prefs.set(2, forKey: "ID_CLIENTE")
             prefs.set(1, forKey: "ISLOGGEDIN") //asigando el valor 1 porque el login fue success
             prefs.synchronize()
             

@@ -15,6 +15,9 @@
 		A509F05A1EDA468D00F8AC5D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A509F0591EDA468D00F8AC5D /* LoginView.swift */; };
 		A50C80371EF8A14300A03D31 /* ConsumoLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C80361EF8A14300A03D31 /* ConsumoLocationViewController.swift */; };
 		A50C80391EF8A1C500A03D31 /* Reservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C80381EF8A1C500A03D31 /* Reservation.swift */; };
+		A50C803B1EF9AD7000A03D31 /* ConsumosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C803A1EF9AD7000A03D31 /* ConsumosTableViewController.swift */; };
+		A50C803D1EF9C0E200A03D31 /* ArticleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C803C1EF9C0E200A03D31 /* ArticleList.swift */; };
+		A50C803F1EF9E2B400A03D31 /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C803E1EF9E2B400A03D31 /* Operation.swift */; };
 		A51469831EF7439700220094 /* UpdateConsumoComidasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51469821EF7439700220094 /* UpdateConsumoComidasViewController.swift */; };
 		A51469851EF7547100220094 /* updateConsumoBebidasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51469841EF7547100220094 /* updateConsumoBebidasViewController.swift */; };
 		A51469871EF757F100220094 /* UpdateConsumoPostresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51469861EF757F100220094 /* UpdateConsumoPostresViewController.swift */; };
@@ -89,6 +92,9 @@
 		A509F0591EDA468D00F8AC5D /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		A50C80361EF8A14300A03D31 /* ConsumoLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsumoLocationViewController.swift; sourceTree = "<group>"; };
 		A50C80381EF8A1C500A03D31 /* Reservation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reservation.swift; sourceTree = "<group>"; };
+		A50C803A1EF9AD7000A03D31 /* ConsumosTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsumosTableViewController.swift; sourceTree = "<group>"; };
+		A50C803C1EF9C0E200A03D31 /* ArticleList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleList.swift; sourceTree = "<group>"; };
+		A50C803E1EF9E2B400A03D31 /* Operation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
 		A51469821EF7439700220094 /* UpdateConsumoComidasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateConsumoComidasViewController.swift; sourceTree = "<group>"; };
 		A51469841EF7547100220094 /* updateConsumoBebidasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = updateConsumoBebidasViewController.swift; sourceTree = "<group>"; };
 		A51469861EF757F100220094 /* UpdateConsumoPostresViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateConsumoPostresViewController.swift; sourceTree = "<group>"; };
@@ -185,6 +191,7 @@
 		A509F0491EDA017600F8AC5D /* models */ = {
 			isa = PBXGroup;
 			children = (
+				A50C803C1EF9C0E200A03D31 /* ArticleList.swift */,
 				A55896EB1EF502BA00660BC3 /* Details.swift */,
 				A55896E91EF4FE2300660BC3 /* FoodOrder.swift */,
 				A562FA2E1EE50E4600DDE9B0 /* Location.swift */,
@@ -194,6 +201,7 @@
 				A509F0551EDA28E900F8AC5D /* Setting.swift */,
 				A5E073371EE3D8EE0098A2A8 /* Solicitud.swift */,
 				A50C80381EF8A1C500A03D31 /* Reservation.swift */,
+				A50C803E1EF9E2B400A03D31 /* Operation.swift */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -219,8 +227,9 @@
 			isa = PBXGroup;
 			children = (
 				A529F72D1EDB8B1A0054BA57 /* ConsumosViewController.swift */,
-				A5C159EB1EF1C74A00AD6E01 /* CreateConsumoBebidasViewController.swift */,
+				A50C803A1EF9AD7000A03D31 /* ConsumosTableViewController.swift */,
 				A5C159E91EF1AD0300AD6E01 /* CreateConsumoViewController.swift */,
+				A5C159EB1EF1C74A00AD6E01 /* CreateConsumoBebidasViewController.swift */,
 				A5C159ED1EF1CE7A00AD6E01 /* CreateConsmumoPostresViewController.swift */,
 				A50C80361EF8A14300A03D31 /* ConsumoLocationViewController.swift */,
 				A5E0733B1EE3E8BF0098A2A8 /* CreateServicioViewController.swift */,
@@ -624,11 +633,14 @@
 				A5C159EC1EF1C74A00AD6E01 /* CreateConsumoBebidasViewController.swift in Sources */,
 				A529F72E1EDB8B1A0054BA57 /* ConsumosViewController.swift in Sources */,
 				A536E8851EE66AED001E59F2 /* SweetAlert.swift in Sources */,
+				A50C803F1EF9E2B400A03D31 /* Operation.swift in Sources */,
 				A58B314D1EF0D66A0079A2D8 /* FormularioConsumoTableViewCell.swift in Sources */,
 				A562FA2F1EE50E4600DDE9B0 /* Location.swift in Sources */,
 				A51469871EF757F100220094 /* UpdateConsumoPostresViewController.swift in Sources */,
 				A50C80391EF8A1C500A03D31 /* Reservation.swift in Sources */,
 				A529F7301EDB8F140054BA57 /* ServiciosViewController.swift in Sources */,
+				A50C803D1EF9C0E200A03D31 /* ArticleList.swift in Sources */,
+				A50C803B1EF9AD7000A03D31 /* ConsumosTableViewController.swift in Sources */,
 				A5E0733A1EE3E3DD0098A2A8 /* MantenimientoTableViewCell.swift in Sources */,
 				A5C159EE1EF1CE7A00AD6E01 /* CreateConsmumoPostresViewController.swift in Sources */,
 				A562FA2D1EE4EDD000DDE9B0 /* FormularioServicioTableViewCell.swift in Sources */,

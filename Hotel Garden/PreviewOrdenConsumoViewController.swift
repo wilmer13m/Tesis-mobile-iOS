@@ -38,6 +38,8 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         setupHeaderView()
         
         sweetAlert.sweetDelegate = self
@@ -45,9 +47,9 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
         tableView.register(OrderConsumoTableViewCell.self, forCellReuseIdentifier: cellId)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId2)
 
-        comidasArray = currentOrder.filter({ $0.0.tipo == "B" })
-        bebidasArray = currentOrder.filter({ $0.0.tipo == "C" })
-        postresArray = currentOrder.filter({ $0.0.tipo == "A" })
+        comidasArray = currentOrder.filter({ $0.0.tipo == "1" })
+        bebidasArray = currentOrder.filter({ $0.0.tipo == "2" })
+        postresArray = currentOrder.filter({ $0.0.tipo == "3" })
         
         //SETTING NAVBAR
         navigationItem.title = "Previo de la orden"
@@ -173,7 +175,8 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
         let okAction = UIAlertAction(title: "Ok", style: .destructive) {
             (result : UIAlertAction) -> Void in
             
-            self.createFoodOrder()
+            self.createOperation()
+
         }
         
         // Replace UIAlertActionStyle.Default by UIAlertActionStyle.default
@@ -190,26 +193,33 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
     }
     
     
-    //MARK:METODO PARA CREAR UNA FOODORDER
-    func createFoodOrder(){
+    //MARK:METODO PARA CREAR UN OPERATION
+    func createOperation(){
     
-        let reservation_id = reservation.id //FALTA
-        let client_id : Int = prefs.integer(forKey: "ID_CLIENTE") as Int
-        let origin_id = 1 //siempre
-        let user_id = 1 //SIEMPRE
-        let room_id = reservation.room_id//FALTA
-        let location_id = lugar.1 //HABITACIONES
-        let estatus = "Por procesar"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:MM"
         
-        var foodOrderId = Int()
+        let timeString = formatter.string(from: NSDate() as Date)
+        
+        print(timeString)
+        
+        
+        let date = Date()
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month, .day], from: date)
+        
+        let fecha = "\(components.year!)-\(components.month!)-\(components.day!)"
+        
+        print(fecha)
+        
         
         loadingView.showMenuLoad()
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         
-        var request = URLRequest(url: URL(string: "\(HttpRuta.ruta)/foodorders/")!)
+        var request = URLRequest(url: URL(string: "\(HttpRuta.ruta)/operations")!)
         request.httpMethod = "POST"
-        let postString = "reservation_id=\(reservation_id)&client_id=\(client_id)&origin_id=\(origin_id)&user_id=\(user_id)&room_id=\(room_id)&location_id=\(location_id)&estatus=\(estatus)"
+        let postString = "fecha=\(fecha)&hora=\(timeString)"
         
         print(postString)
         
@@ -220,13 +230,12 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
                 return
             }
             
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200{           // check for http errors
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
                 print("statusCode should be 200, but is \(httpStatus.statusCode)")
                 print("response = \(response!)")
                 
                 
                 DispatchQueue.main.async(execute: {
-                    
                     self.loadingView.hideLoadingView()
                     UIApplication.shared.isNetworkActivityIndicatorVisible = false
                     
@@ -253,14 +262,22 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
                     if let json = try JSONSerialization.jsonObject(with: data, options:[]) as? [String:AnyObject] {
                         
                         
-                        let foodOrderData = json["food_order"] as! [String:AnyObject]
+                        let operationData = json["operation"] as! [String:AnyObject]
                         
-                        let idOrder = foodOrderData["id"] as! Int
+                        let operations = Operations()
+                        operations.id = operationData["id"] as! Int
+                        operations.fecha = operationData["fecha"] as! String
+                        operations.hora = operationData["hora"] as! String
                         
-                        foodOrderId = idOrder
                         
                         
-                        self.createDetailOrder(idFoodOrder: foodOrderId)
+                        DispatchQueue.main.async(execute: {
+                            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                            self.loadingView.hideLoadingView()
+                            self.foodOrder(operat: operations)
+                            
+                        })
+                        
                         
                     }
                     
@@ -275,18 +292,7 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
                 }
                 
                 
-                
-                
-                DispatchQueue.main.async(execute: {
-                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                    self.loadingView.hideLoadingView()
-                    _ = self.sweetAlert.showAlert("Completado!", subTitle: "Su orden de mantenimiento ha sido enviada con exito", style: AlertStyle.success)
-                    
-                    let responseString = String(data: data, encoding: .utf8)
-                    print("responseString = \(responseString!)")
-                    
-                })
-                
+             
             }
             //aqui poner el sweet alert de error
             
@@ -295,34 +301,248 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
         
         
         task.resume()
-    
+   
     
     }
     
     
+    func foodOrder(operat : Operations){
     
-    //MARK: METODO PARA CREAR UN DETAIL
-    func createDetailOrder(idFoodOrder id : Int){
-    
-        print("toque el boton")
+        let reservation_id = reservation.id
+        let client_id : Int = prefs.integer(forKey: "ID_CLIENTE") as Int
+        let origin_id = 2
+        let user_id = 1
+        let room_id = reservation.room_id
+        let location_id = lugar.1
+        let estatus = 1
+        let operatId = operat.id
         
-        var band = true
+        
+        loadingView.showMenuLoad()
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+
+        
+        let postString = "reservations_id=\(reservation_id)&operation_id=\(operatId)&client_id=\(client_id)&origin_id=\(origin_id)&user_id=\(user_id)&location_id=\(location_id)&fecha_orden=\(operat.fecha)&hora_orden=\(operat.hora)&room_id=\(room_id)&estatus=\(estatus)"
+        
+        let request = NSMutableURLRequest(url: NSURL(string: "\(HttpRuta.ruta)/foodorders")! as URL)
+        request.httpMethod = "POST"
+        request.httpBody = postString.data(using: String.Encoding.utf8)
+        let task = URLSession.shared.dataTask(with: request as URLRequest) { data, response, error in
+            
+            guard error == nil && data != nil else {                                                          // check for fundamental networking error
+                DispatchQueue.main.async(execute: {
+                    self.loadingView.hideLoadingView()
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                    
+                    let alert = UIAlertController(title: "¡Error!", message:"error interno en el servidor", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
+                        
+                    }))
+                    
+                    self.present(alert, animated: true, completion: nil)
+                    
+                })
+
+                print("error=\(error!)")
+                return
+            }
+            
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                print("response = \(response!)")
+            
+        
+                DispatchQueue.main.async(execute: {
+                    self.loadingView.hideLoadingView()
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                
+                    let alert = UIAlertController(title: "¡Error 500!", message:"error interno en el servidor", preferredStyle: UIAlertControllerStyle.alert)
+                
+                    alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
+                
+                    }))
+                
+                    self.present(alert, animated: true, completion: nil)
+                                    
+                    })
+                
+            }else{
+            
+                do{
+                    
+                    if let json = try JSONSerialization.jsonObject(with: data!, options:[]) as? [String:AnyObject] {
+                        
+                        let orderData = json["food_order"] as! [String:AnyObject]
+                        
+                        let foodOrder = FoodOrder()
+                        foodOrder.reservation_id = orderData["reservations_id"] as! String
+                        foodOrder.operation_id = orderData["operation_id"] as! String
+                        foodOrder.client_id = orderData["client_id"] as! String
+                        let origen = orderData["origin_id"] as! String
+                        foodOrder.origin_id = Int(origen)!
+                        let user_id = orderData["user_id"] as! String
+                        foodOrder.user_id = Int(user_id)!
+                        let location = orderData["location_id"] as! String
+                        foodOrder.location_id = Int(location)!
+                        foodOrder.fecha_orden = orderData["fecha_orden"] as! String
+                        foodOrder.hora_orden = orderData["hora_orden"] as! String
+                        let room = orderData["room_id"] as! String
+                        foodOrder.roomId = Int(room)!
+                        foodOrder.estatus = orderData["estatus"] as! String
+                        foodOrder.updated_at = orderData["updated_at"] as! String
+                        foodOrder.created_at = orderData["created_at"] as! String
+                        foodOrder.id = orderData["id"] as! Int
+                        
+                        DispatchQueue.main.async(execute: {
+                            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                            self.loadingView.hideLoadingView()
+                            self.createArticles(foodOrder: foodOrder)
+                            
+                        })
+                        
+                        
+                    }
+                    
+                } catch let jsonError {
+                    print("error en el json: \(jsonError)")
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                    self.loadingView.hideLoadingView()
+                    self.mensajeError.showElements()
+                    self.mensajeError.showView()
+                    self.tableView.isHidden = true
+                    
+                }
+                
+            
+            }
+    
+        
+            let responseString = String(data: data!, encoding: String.Encoding.utf8)
+            print("responseString = \(responseString!)")
+            
+            
+        }
+        
+        task.resume()
+    
+    }
+    
+
+    
+    func createArticles(foodOrder : FoodOrder){
+    
+        var band = false
+        
+        print(currentOrder.count)
         
         for x in currentOrder{
             
-            let product_id = x.0.id
+            let operation_id = foodOrder.operation_id
             let descripcion_producto = x.0.nombre
             let cantidad = x.1.replacingOccurrences(of: "Cant:", with: "")
-            let food_order_id = id
+            let tipo = x.0.tipo
+            
+            loadingView.showMenuLoad()
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
+            let request = NSMutableURLRequest(url: NSURL(string: "\(HttpRuta.ruta)/operations/\(operation_id)/details")! as URL)
+            request.httpMethod = "POST"
+            let postString = "cantidad_prod=\(cantidad)&tipo=\(tipo)&descripcion_prod=\(descripcion_producto)"
+            request.httpBody = postString.data(using: String.Encoding.utf8)
+            let task = URLSession.shared.dataTask(with: request as URLRequest) { data, response, error in
+                
+                guard error == nil && data != nil else {                                                          // check for fundamental networking error
+                    band = false
+                    DispatchQueue.main.async(execute: {
+                        self.loadingView.hideLoadingView()
+                        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                        
+                        let alert = UIAlertController(title: "¡Error!", message:"error interno en el servidor", preferredStyle: UIAlertControllerStyle.alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
+                            
+                        }))
+                        
+                        self.present(alert, animated: true, completion: nil)
+                        
+                    })
+                    
+                    print("error=\(error!)")
+                    return
+                }
+                
+                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+                    print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                    print("response = \(response!)")
+                    
+                    DispatchQueue.main.async(execute: {
+                        self.loadingView.hideLoadingView()
+                        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                        
+                        let alert = UIAlertController(title: "¡Error 500!", message:"error interno en el servidor", preferredStyle: UIAlertControllerStyle.alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
+                            
+                        }))
+                        
+                        self.present(alert, animated: true, completion: nil)
+                        
+                    })
+                    
+                }else{
+                
+                    band = true
+                
+                }
+                
+                
+                print(postString)
+                
+                
+                let responseString = String(data: data!, encoding: String.Encoding.utf8)
+                print("responseString = \(responseString!)")
+
+            }
+            task.resume()
+
+        }
+        
+        
+            DispatchQueue.main.async(execute: {
+                self.loadingView.hideLoadingView()
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                self.loadingView.hideLoadingView()
+                _ = self.sweetAlert.showAlert("Completado!", subTitle: "Su orden de mantenimiento ha sido enviada con exito", style: AlertStyle.success)
+
+            })
+        
+        
+
+    }
+    
+    //MARK: METODO PARA CREAR UN DETAIL
+    func createDetailOrder(FoodOrder foodOrder : FoodOrder){
+        
+        var band = true
+        
+        print(currentOrder.count)
+        
+        for x in currentOrder{
+            
+            let operation_id = foodOrder.operation_id
+            let descripcion_producto = x.0.nombre
+            let cantidad = x.1.replacingOccurrences(of: "Cant:", with: "")
+            let tipo = x.0.tipo
             
             loadingView.showMenuLoad()
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
             
+            var request = URLRequest(url: URL(string: "\(HttpRuta.ruta)/operations/\(operation_id)/details/")!)
             
-            var request = URLRequest(url: URL(string: "\(HttpRuta.ruta)/foodorders/\(food_order_id)/details/")!)
             request.httpMethod = "POST"
-            let postString = "product_id=\(product_id)&descripcion_producto=\(descripcion_producto)&cantidad=\(cantidad)&food_order_id=\(food_order_id)"
-                    
+            let postString = "cantidad_prod=\(cantidad)&tipo=\(tipo)&descripcion_prod=\(descripcion_producto)"
+            
             print(postString)
             
             request.httpBody = postString.data(using: .utf8)
@@ -331,58 +551,71 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
                     print("error=\(error!)")
                     return
                 }
-            
+                
                 if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200{           // check for http errors
                     print("statusCode should be 200, but is \(httpStatus.statusCode)")
                     print("response = \(response!)")
-                
-                    band = false
-            
+                    
+                    
                     DispatchQueue.main.async(execute: {
-            
+                        band = false
                         self.loadingView.hideLoadingView()
                         UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            
-                        let alert = UIAlertController(title: "¡Error 500!", message:"error interno en el servidor", preferredStyle: UIAlertControllerStyle.alert)
-            
+                        let alert = UIAlertController(title: "¡Error 501!", message:"error interno en el servidor", preferredStyle: UIAlertControllerStyle.alert)
                         alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
-            
                         }))
-            
                         self.present(alert, animated: true, completion: nil)
-            
                     })
-                
+                    
                     return
-            
                 }
-            
-                            //Todo salio bn
+                    
                 else{
                     
-                    print("algo salio mal en details")
-          
-                
-                }
-            
-            
-            }
+                    DispatchQueue.main.async(execute: {
+                        self.loadingView.hideLoadingView()
+                            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                            self.loadingView.hideLoadingView()
+                            _ = self.sweetAlert.showAlert("Completado!", subTitle: "Su orden de mantenimiento ha sido enviada con exito", style: AlertStyle.success)
+                            
+                            let responseString = String(data: data!, encoding: .utf8)
+                            print("responseString = \(responseString!)")
                     
+                    })
+                    print("algo salio mal en details")
+                    
+                }
+                
+            }
             
             task.resume()
         
         }
-    
         
         if band == true{
-            
-            print("todas los details se cargaron ok")
+        
+            DispatchQueue.main.async(execute: {
+              
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                self.loadingView.hideLoadingView()
+                _ = self.sweetAlert.showAlert("Completado!", subTitle: "Su orden de mantenimiento ha sido enviada con exito", style: AlertStyle.success)
+
+            })
         
         }else{
-            
-            print("algun detalle fallo ")
+        
+            DispatchQueue.main.async(execute: {
+
+                self.loadingView.hideLoadingView()
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                let alert = UIAlertController(title: "¡Error!", message:"error no se puedo crear la orden", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
+                }))
+                self.present(alert, animated: true, completion: nil)
+            })
         
         }
+    
     
     }
     
@@ -391,17 +624,16 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
     
     
     func sweetAlertOkButtonPressed() {
+      
+        
         let arrayControllers = self.navigationController?.viewControllers
         
         print("entre al delegado de sweet alert")
         
-        var vc : ConsumoViewController?
+        var vc : ConsumosTableViewController?
         for x in arrayControllers!{
-            
-            if x is ConsumoViewController{
-                
-                vc = x as? ConsumoViewController
-            
+            if x is ConsumosTableViewController{
+                vc = x as? ConsumosTableViewController
             }
         
         }

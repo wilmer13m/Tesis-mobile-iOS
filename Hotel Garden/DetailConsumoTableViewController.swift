@@ -25,9 +25,9 @@ class DetailConsumoTableViewController: UITableViewController {
 
     var nombreLugar = String()
     
-    var comidasArray = [Product]()
-    var postresArray = [Product]()
-    var bebidasArray = [Product]()
+    var comidasArray = [ArticleList]()
+    var postresArray = [ArticleList]()
+    var bebidasArray = [ArticleList]()
     
     
     override func viewDidLoad() {
@@ -43,11 +43,28 @@ class DetailConsumoTableViewController: UITableViewController {
         navigationController?.navigationBar.tintColor = .white
         
         
-        for x in foodOrder.details{
+        for x in foodOrder.articles{
         
-            fetchProduct(ProductId: x.product_id, cantidad: x.cantidad)
-        
+            print(x.tipo)
+            print(x.descripcion_prod)
+            switch x.tipo {
+            case 1:
+                comidasArray.append(x)
+            break
+                
+            case 2:
+                bebidasArray.append(x)
+
+            break
+            default:
+                postresArray.append(x)
+                break
+            }
+            
         }
+        
+        
+        location(idLocation: foodOrder.location_id)
 
     }
 
@@ -116,18 +133,18 @@ class DetailConsumoTableViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             
-            cell.titleLabel.text = comidasArray[indexPath.row].nombre
-            cell.cantidadLabel.text = "\(comidasArray[indexPath.row].cant_prod)"
+            cell.titleLabel.text = comidasArray[indexPath.row].descripcion_prod
+            cell.cantidadLabel.text = "\(comidasArray[indexPath.row].cantidad_prod)"
             break
             
         case 1:
-            cell.titleLabel.text = bebidasArray[indexPath.row].nombre
-            cell.cantidadLabel.text = "\(bebidasArray[indexPath.row].cant_prod)"
+            cell.titleLabel.text = bebidasArray[indexPath.row].descripcion_prod
+            cell.cantidadLabel.text = "\(bebidasArray[indexPath.row].cantidad_prod)"
             break
             
         case 2:
-            cell.titleLabel.text = postresArray[indexPath.row].nombre
-            cell.cantidadLabel.text = "\(postresArray[indexPath.row].cant_prod)"
+            cell.titleLabel.text = postresArray[indexPath.row].descripcion_prod
+            cell.cantidadLabel.text = "\(postresArray[indexPath.row].cantidad_prod)"
             
         case 3:
             cell.titleLabel.text = nombreLugar
@@ -143,119 +160,12 @@ class DetailConsumoTableViewController: UITableViewController {
     
     
   
-    //MARK: METODO PARA TRAER LA INFORMACION DE UN PRODUCTO
-    func fetchProduct(ProductId id : Int, cantidad : Int){
-        
-        print("entre al fetching")
-        
-        mensajeError.hideElements()
-        loadingView.showMenuLoad()
-        
-        
-        let url = URL(string: "\(HttpRuta.ruta)/products/\(id)")
-        
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
-        URLSession.shared.dataTask(with: url!) {(data, response, error) in
-            
-            guard data != nil else {
-                print("error de data: \(error!)")
-                
-                DispatchQueue.main.async(execute: {
-                    
-                    self.loadingView.hideLoadingView()
-                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                    
-                    let alert = UIAlertController(title: "¡Ha ocurrido un error!", message:"Por favor revise su conexión a internet", preferredStyle: UIAlertControllerStyle.alert)
-                    
-                    alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
-                        
-                        
-                            //run your function here
-                            
-                            self.mensajeError.showElements()
-                            self.mensajeError.showView()
-                            self.mensajeError.reloadButton.addTarget(self, action: #selector(self.reloadData), for: .touchDown)
-                            self.tableView.isHidden = true
-                        
-                    }))
-                    
-                    self.present(alert, animated: true, completion: nil)
-                    
-                })
-                
-                return
-                
-            }
-            
-            
-            do{
-                
-                if let json = try JSONSerialization.jsonObject(with: data!, options:[]) as? [String:AnyObject] {
-                    
-            
-                    print(json.count)
-                
-                    let productData = json["product"] as! [String:AnyObject]
-                    let product = Product()
-                        
-                        
-                    product.id = productData["id"] as! Int
-                    product.nombre = productData["nombre"] as! String
-                    product.cant_prod = cantidad
-                    product.cant_min = productData["cant_min"] as! Int
-                    product.tipo = productData["tipo"] as! String
-                    
-                    switch product.tipo{
-                    
-                    case "A":
-                        self.postresArray.append(product)
-                        break
-                        
-                    case "B":
-                        self.comidasArray.append(product)
-                        break
-                    default:
-                        
-                        self.bebidasArray.append(product)
-                        break
-                    
-                    }
 
-
-                    //recargo la data del collectionView de manera asincrona
-                    DispatchQueue.main.async(execute: {
-                        self.location(idLocation: self.foodOrder.location_id)
-                        self.tableView.reloadData()
-                        self.loadingView.hideLoadingView()
-                        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                        
-                    })
-                    
-                }
-                
-            } catch let jsonError {
-                print("error en el json: \(jsonError)")
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                self.loadingView.hideLoadingView()
-                self.mensajeError.showElements()
-                self.mensajeError.showView()
-                self.mensajeError.reloadButton.addTarget(self, action: #selector(self.reloadData), for: .touchDown)
-                self.tableView.isHidden = true
-                
-            }
-            
-        }.resume()
-    
-    
-    }
-    
-    
     func location(idLocation id : Int){
     
         print("entre al fetching")
         
-        mensajeError.hideElements()
+     //   mensajeError.hideElements()
         loadingView.showMenuLoad()
         
         
@@ -364,12 +274,7 @@ class DetailConsumoTableViewController: UITableViewController {
     
     
     func reloadData(){
-    
-        for x in foodOrder.details{
-            
-            fetchProduct(ProductId: x.id, cantidad: x.cantidad)
-            
-        }
+        location(idLocation: foodOrder.location_id)
         
     }
  

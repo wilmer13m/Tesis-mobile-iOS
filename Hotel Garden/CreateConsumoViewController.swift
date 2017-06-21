@@ -176,11 +176,18 @@ class CreateConsumoViewController: UITableViewController {
                         
                         if self.productos?.count == nil{
                             //run your function here
+                            DispatchQueue.main.async(execute: {
+                                self.tableView.reloadData()
+                                self.loadingView.hideLoadingView()
+                                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                                self.mensajeError.showElements()
+                                self.mensajeError.showView()
+                                self.mensajeError.reloadButton.addTarget(self, action: #selector(self.reloadData), for: .touchDown)
+                                self.tableView.isHidden = true
+                                
+                            })
                             
-                            self.mensajeError.showElements()
-                            self.mensajeError.showView()
-                            self.mensajeError.reloadButton.addTarget(self, action: #selector(self.reloadData), for: .touchDown)
-                            self.tableView.isHidden = true
+                         
                         }
                     }))
                     
@@ -209,7 +216,7 @@ class CreateConsumoViewController: UITableViewController {
                         
                         let tipo = prod["tipo"] as! String
                         
-                        if tipo == "B"{
+                        if tipo == "1"{
                             
                             producto.id = prod["id"] as! Int
                             producto.nombre = prod["nombre"] as! String

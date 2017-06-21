@@ -213,7 +213,7 @@ class CreateConsumoBebidasViewController: UITableViewController {
                         
                         let tipo = prod["tipo"] as! String
                         
-                        if tipo == "C"{
+                        if tipo == "2"{
                             
                             producto.id = prod["id"] as! Int
                             producto.nombre = prod["nombre"] as! String
