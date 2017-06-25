@@ -16,6 +16,7 @@ class PutConsumoViewController: UITableViewController,SweetAlertDelegate {
     //var que traigo del controlador anterior
     var currentOrder = [(Product,String)]()
     var foodOrder = FoodOrder()
+    var lugar = (String(),Int())
     
     
     //var que no traigo del contralador anterior
@@ -44,14 +45,16 @@ class PutConsumoViewController: UITableViewController,SweetAlertDelegate {
         
         tableView.register(OrderConsumoTableViewCell.self, forCellReuseIdentifier: cellId)
         
-        comidasArray = currentOrder.filter({ $0.0.tipo == "B" })
-        bebidasArray = currentOrder.filter({ $0.0.tipo == "C" })
-        postresArray = currentOrder.filter({ $0.0.tipo == "A" })
+        comidasArray = currentOrder.filter({ $0.0.tipo == "1" })
+        bebidasArray = currentOrder.filter({ $0.0.tipo == "2" })
+        postresArray = currentOrder.filter({ $0.0.tipo == "3" })
         
         //SETTING NAVBAR
         navigationItem.title = "Previo de la orden"
         navigationController?.navigationBar.tintColor = .white
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named:"arrow"), style: .plain, target: self, action: #selector(self.editDetailOrder))
+        
+        print(lugar)
         
     }
     
@@ -68,8 +71,13 @@ class PutConsumoViewController: UITableViewController,SweetAlertDelegate {
         case 1:
             return bebidasArray.count
             
-        default:
+        case 2:
             return postresArray.count
+
+        default:
+            
+            return 1
+        
         }
     }
     
@@ -90,9 +98,14 @@ class PutConsumoViewController: UITableViewController,SweetAlertDelegate {
             cell.cantidadLabel.text = "\(bebidasArray[indexPath.row].1.replacingOccurrences(of: "Cant:", with: ""))"
             break
             
-        default:
+        case 2:
             cell.titleLabel.text = postresArray[indexPath.row].0.nombre
             cell.cantidadLabel.text = "\(postresArray[indexPath.row].1.replacingOccurrences(of: "Cant:", with: ""))"
+            break
+        default:
+           
+            cell.titleLabel.text = lugar.0
+            cell.cantidadLabel.text = " "
         }
         
         return cell
@@ -109,15 +122,18 @@ class PutConsumoViewController: UITableViewController,SweetAlertDelegate {
             
             return "Bebidas"
             
-        default:
+        case 2:
             return "Postres"
+            
+        default:
+            return "Lugar"
         }
         
     }
     
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     
@@ -155,19 +171,19 @@ class PutConsumoViewController: UITableViewController,SweetAlertDelegate {
     
     func editarConsumo(){
         
-        var aux1 = [Int]()
-        var aux2 = [Int]()
-        var aux3 = [Int]()
+        var aux1 = [String]()
+        var aux2 = [String]()
+        var aux3 = [String]()
         
         for x in currentOrder{
    
-            aux1.append(x.0.id)
+            aux1.append(x.0.nombre)
     
         }
         
-        for y in foodOrder.details{
+        for y in foodOrder.articles{
         
-            aux2.append(y.product_id)
+            aux2.append(y.descripcion_prod)
         
         }
         
@@ -177,37 +193,46 @@ class PutConsumoViewController: UITableViewController,SweetAlertDelegate {
             
             for y in aux3 {
             
-                if x.0.id == y{
+                if x.0.nombre == y{
                     
-                    let product_id = x.0.id
+                    let operation_id = foodOrder.operation_id
                     let descripcion_producto = x.0.nombre
                     let cantidad = x.1.replacingOccurrences(of: "Cant:", with: "")
-                    let food_order_id = foodOrder.id
+                    let tipo = x.0.tipo
                     
                     loadingView.showMenuLoad()
                     UIApplication.shared.isNetworkActivityIndicatorVisible = true
                     
-                    
-                    var request = URLRequest(url: URL(string: "\(HttpRuta.ruta)/foodorders/\(food_order_id)/details/")!)
+                    let request = NSMutableURLRequest(url: NSURL(string: "\(HttpRuta.ruta)/operations/\(operation_id)/details")! as URL)
                     request.httpMethod = "POST"
-                    let postString = "product_id=\(product_id)&descripcion_producto=\(descripcion_producto)&cantidad=\(cantidad)&food_order_id=\(food_order_id)"
-                    
-                    print(postString)
-                    
-                    request.httpBody = postString.data(using: .utf8)
-                    let task = URLSession.shared.dataTask(with: request) { data, response, error in
-                        guard let _ = data, error == nil else {
+                    let postString = "cantidad_prod=\(cantidad)&tipo=\(tipo)&descripcion_prod=\(descripcion_producto)"
+                    request.httpBody = postString.data(using: String.Encoding.utf8)
+                    let task = URLSession.shared.dataTask(with: request as URLRequest) { data, response, error in
+                        
+                        guard error == nil && data != nil else {                                                          // check for fundamental networking error
+                            DispatchQueue.main.async(execute: {
+                                self.loadingView.hideLoadingView()
+                                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                                
+                                let alert = UIAlertController(title: "¡Error!", message:"error interno en el servidor", preferredStyle: UIAlertControllerStyle.alert)
+                                
+                                alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
+                                    
+                                }))
+                                
+                                self.present(alert, animated: true, completion: nil)
+                                
+                            })
+                            
                             print("error=\(error!)")
                             return
                         }
                         
-                        if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200{           // check for http errors
+                        if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
                             print("statusCode should be 200, but is \(httpStatus.statusCode)")
                             print("response = \(response!)")
                             
-                            
                             DispatchQueue.main.async(execute: {
-                                
                                 self.loadingView.hideLoadingView()
                                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                                 
@@ -221,21 +246,19 @@ class PutConsumoViewController: UITableViewController,SweetAlertDelegate {
                                 
                             })
                             
-                            return
-                            
-                        }
-                            
-                            //Todo salio bn
-                        else{
-                            
-                            print("algo salio mal en details")
+                        }else{
                             
                             
                         }
                         
+                        
+                        print(postString)
+                        
+                        
+                        let responseString = String(data: data!, encoding: String.Encoding.utf8)
+                        print("responseString = \(responseString!)")
                         
                     }
-                    
                     
                     task.resume()
                     
@@ -255,27 +278,27 @@ class PutConsumoViewController: UITableViewController,SweetAlertDelegate {
         for x in currentOrder{
         
             
-            for y in foodOrder.details{
+            for y in foodOrder.articles{
             
-                if x.0.id == y.product_id{
+                if x.0.nombre == y.descripcion_prod{
                 
-                    if x.1.replacingOccurrences(of: "Cant:", with: "") != " \(y.cantidad)"{
+                    if x.1.replacingOccurrences(of: "Cant:", with: "") != " \(y.cantidad_prod)"{
                     
-                        let product_id = x.0.id
-                        let descripcion_producto = y.descripcion_producto
+                       // let product_id = x.0.id
+                        let descripcion_producto = y.descripcion_prod
                         let cantidad = x.1.replacingOccurrences(of: "Cant:", with: "")
-                        let food_order_id = y.foodOrderId
                         let idDetail = y.id
+                        let operation = y.operation_id
                         
-                        loadingView.showMenuLoad()
+                        self.loadingView.showMenuLoad()
                         UIApplication.shared.isNetworkActivityIndicatorVisible = true
                         
                         
-                        var request = URLRequest(url: URL(string: "\(HttpRuta.ruta)/details/\(idDetail)")!)
+                        var request = URLRequest(url: URL(string: "\(HttpRuta.ruta)/operations/\(operation)/details/\(idDetail)")!)
                         request.httpMethod = "PUT"
                         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "content-type")
                         
-                        let postString = "product_id=\(product_id)&descripcion_producto=\(descripcion_producto)&cantidad=\(cantidad)&food_order_id=\(food_order_id)"
+                        let postString = "descripcion_producto=\(descripcion_producto)&cantidad=\(cantidad)"
                         
                         print(postString)
                         
@@ -312,7 +335,7 @@ class PutConsumoViewController: UITableViewController,SweetAlertDelegate {
                                 DispatchQueue.main.async(execute: {
                                     self.editarConsumo()
                                     self.loadingView.hideLoadingView()
-                                    _ = self.sweetAlert.showAlert("Completado!", subTitle: "Su orden de mantenimiento ha sido enviada con exito", style: AlertStyle.success)
+                                    _ = self.sweetAlert.showAlert("Completado!", subTitle: "Su orden de consumo ha sido enviada con exito", style: AlertStyle.success)
                                     
                                 })
                                 
@@ -341,12 +364,12 @@ class PutConsumoViewController: UITableViewController,SweetAlertDelegate {
         
         print("entre al delegado de sweet alert")
         
-        var vc : ConsumoViewController?
+        var vc : ConsumosTableViewController?
         for x in arrayControllers!{
             
-            if x is ConsumoViewController{
+            if x is ConsumosTableViewController{
                 
-                vc = x as? ConsumoViewController
+                vc = x as? ConsumosTableViewController
                 
             }
             

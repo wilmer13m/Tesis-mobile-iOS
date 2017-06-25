@@ -118,18 +118,26 @@ class ServicioViewController: UITableViewController,CrearServicioDelegate {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! ServicioTableViewCell
         
+        print(maintenances!.count)
+        print(indexPath.row)
         
-        cell.maintenances = maintenances?.reversed()[indexPath.row]
-        
+        if indexPath.row <= maintenances!.count{
+            
+            if let main = maintenances?.reversed()[indexPath.row]{
+                cell.maintenances = main
+            }
+        }
         
         return cell
         
     }
     
+    
+    
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
-    
     
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
@@ -529,6 +537,20 @@ class ServicioViewController: UITableViewController,CrearServicioDelegate {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {
                 print("error=\(error!)")
+                DispatchQueue.main.async(execute: {
+                    
+                    self.loadingView.hideLoadingView()
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                    
+                    let alert = UIAlertController(title: "¡Ha ocurrido un error!", message:"Por favor revise su conexión a internet", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
+                        
+                    }))
+                    
+                    self.present(alert, animated: true, completion: nil)
+                    
+                })
                 return
             }
             

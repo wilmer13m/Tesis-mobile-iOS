@@ -170,7 +170,7 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
     func crearConsumo(){
         
         
-        let alertController = UIAlertController(title: "Confirmacion", message: "¿Esta seguro que desea realizar este consumo?", preferredStyle: UIAlertControllerStyle.alert)
+        let alertController = UIAlertController(title: "Confirmación", message: "¿Esta seguro que desea realizar este consumo?", preferredStyle: UIAlertControllerStyle.alert)
         
         let okAction = UIAlertAction(title: "Ok", style: .destructive) {
             (result : UIAlertAction) -> Void in
@@ -504,6 +504,8 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
                 print("responseString = \(responseString!)")
 
             }
+            
+            print(band)
             task.resume()
 
         }
@@ -520,105 +522,6 @@ class PreviewOrdenConsumoViewController: UITableViewController,SweetAlertDelegat
         
 
     }
-    
-    //MARK: METODO PARA CREAR UN DETAIL
-    func createDetailOrder(FoodOrder foodOrder : FoodOrder){
-        
-        var band = true
-        
-        print(currentOrder.count)
-        
-        for x in currentOrder{
-            
-            let operation_id = foodOrder.operation_id
-            let descripcion_producto = x.0.nombre
-            let cantidad = x.1.replacingOccurrences(of: "Cant:", with: "")
-            let tipo = x.0.tipo
-            
-            loadingView.showMenuLoad()
-            UIApplication.shared.isNetworkActivityIndicatorVisible = true
-            
-            var request = URLRequest(url: URL(string: "\(HttpRuta.ruta)/operations/\(operation_id)/details/")!)
-            
-            request.httpMethod = "POST"
-            let postString = "cantidad_prod=\(cantidad)&tipo=\(tipo)&descripcion_prod=\(descripcion_producto)"
-            
-            print(postString)
-            
-            request.httpBody = postString.data(using: .utf8)
-            let task = URLSession.shared.dataTask(with: request) { data, response, error in
-                guard let _ = data, error == nil else {
-                    print("error=\(error!)")
-                    return
-                }
-                
-                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200{           // check for http errors
-                    print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                    print("response = \(response!)")
-                    
-                    
-                    DispatchQueue.main.async(execute: {
-                        band = false
-                        self.loadingView.hideLoadingView()
-                        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                        let alert = UIAlertController(title: "¡Error 501!", message:"error interno en el servidor", preferredStyle: UIAlertControllerStyle.alert)
-                        alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
-                        }))
-                        self.present(alert, animated: true, completion: nil)
-                    })
-                    
-                    return
-                }
-                    
-                else{
-                    
-                    DispatchQueue.main.async(execute: {
-                        self.loadingView.hideLoadingView()
-                            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                            self.loadingView.hideLoadingView()
-                            _ = self.sweetAlert.showAlert("Completado!", subTitle: "Su orden de mantenimiento ha sido enviada con exito", style: AlertStyle.success)
-                            
-                            let responseString = String(data: data!, encoding: .utf8)
-                            print("responseString = \(responseString!)")
-                    
-                    })
-                    print("algo salio mal en details")
-                    
-                }
-                
-            }
-            
-            task.resume()
-        
-        }
-        
-        if band == true{
-        
-            DispatchQueue.main.async(execute: {
-              
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                self.loadingView.hideLoadingView()
-                _ = self.sweetAlert.showAlert("Completado!", subTitle: "Su orden de mantenimiento ha sido enviada con exito", style: AlertStyle.success)
-
-            })
-        
-        }else{
-        
-            DispatchQueue.main.async(execute: {
-
-                self.loadingView.hideLoadingView()
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                let alert = UIAlertController(title: "¡Error!", message:"error no se puedo crear la orden", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "Ok" , style: UIAlertActionStyle.default, handler:  { action in
-                }))
-                self.present(alert, animated: true, completion: nil)
-            })
-        
-        }
-    
-    
-    }
-    
     
     
     

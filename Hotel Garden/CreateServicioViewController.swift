@@ -10,6 +10,7 @@
 protocol CrearServicioDelegate {
     
     func pasarDataDelegate(x: Int)
+    
 }
 
 import UIKit
@@ -81,6 +82,10 @@ class CreateServicioViewController: UITableViewController,UIPickerViewDataSource
         
         tableView.reloadData()
         
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        mensajeError.hideElements()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -305,7 +310,7 @@ class CreateServicioViewController: UITableViewController,UIPickerViewDataSource
         print("toque el boton")
         
         let location_id : NSString = fieldText as NSString
-        let estatus : NSString = "Por procesar"
+        let estatus : NSString = "1"
         let descripcion : NSString = myTextview as NSString
         let clientId : Int = prefs.integer(forKey: "ID_CLIENTE") as Int
         let user_ID = 1

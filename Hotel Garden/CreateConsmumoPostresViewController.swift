@@ -35,7 +35,7 @@ class CreateConsmumoPostresViewController: UITableViewController {
         tableView.setEditing(true, animated: false)
         
         //SETTING NAVBAR
-        navigationItem.title = "Nueva orden(3/3)"
+        navigationItem.title = "Nueva orden(3/4)"
         navigationController?.navigationBar.tintColor = .white
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named:"arrow"), style: .plain, target: self, action: #selector(self.siguiente))
         

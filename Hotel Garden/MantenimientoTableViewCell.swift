@@ -47,22 +47,25 @@ class ServicioTableViewCell: UITableViewCell {
             if let status = maintenances?.estatus{
                 
                 switch status {
-                case "Por procesar":
+                case "1":
                     
+                    titleLabel.text = "Por procesar"
                     statusCircle.backgroundColor = .azul()
                     break
                     
-                case "Procesando":
+                case "2":
                     
+                    titleLabel.text = "En proceso"
                     statusCircle.backgroundColor = .yellow
                     break
                     
-                case "Cancelada":
+                case "3":
                     
+                    titleLabel.text = "Procesado"
                     statusCircle.backgroundColor = .red
                     
                 default:
-                    
+                    titleLabel.text = "Cancelado"
                     statusCircle.backgroundColor = .green
                     break
                 }

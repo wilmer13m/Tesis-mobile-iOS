@@ -203,10 +203,10 @@ extension String {
 class HttpRuta {
 
 
-//    static var ruta = "http://192.168.43.120/api" art
-  //  static var ruta = "http://localhost:8000/api"
-    //static var ruta = "http://172.20.10.8/api"
-       static var ruta = "http://192.168.0.103/api"
+//     static var ruta = "http://192.168.43.120/api" art
+ //   static var ruta = "http://localhost:8000/api"
+//     static var ruta = "http://172.20.10.8/api"
+     static var ruta = "http://192.168.0.105/api"
 
 
 

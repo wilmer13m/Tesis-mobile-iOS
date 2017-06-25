@@ -39,7 +39,7 @@ class updateConsumoBebidasViewController: UITableViewController {
         tableView.setEditing(true, animated: false)
         
         //SETTING NAVBAR
-        navigationItem.title = "Editando orden(2/3)"
+        navigationItem.title = "Editando orden(2/4)"
         navigationController?.navigationBar.tintColor = .white
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named:"arrow"), style: .plain, target: self, action: #selector(self.siguiente))
         
@@ -139,11 +139,11 @@ class updateConsumoBebidasViewController: UITableViewController {
         
         if let myCell = cell as? FormularioConsumoTableViewCell  {
             
-            for x in foodOrder.details{
+            for x in foodOrder.articles{
                 
-                if x.product_id == productos![indexPath.row].id{
+                if x.descripcion_prod == productos![indexPath.row].nombre{
                     tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
-                    myCell.cantidadLabel.text = "Cant: \(x.cantidad)"
+                    myCell.cantidadLabel.text = "Cant: \(x.cantidad_prod)"
                     currentOrder.append((productos![indexPath.row], myCell.cantidadLabel.text!))
 
                 }
@@ -154,6 +154,7 @@ class updateConsumoBebidasViewController: UITableViewController {
     }
     
 
+    
     
     //MARK:FETCHING DATA
     func fetchingBebidas(){
@@ -222,7 +223,7 @@ class updateConsumoBebidasViewController: UITableViewController {
                         
                         let tipo = prod["tipo"] as! String
                         
-                        if tipo == "C"{
+                        if tipo == "2"{
                             
                             producto.id = prod["id"] as! Int
                             producto.nombre = prod["nombre"] as! String
@@ -255,10 +256,11 @@ class updateConsumoBebidasViewController: UITableViewController {
                 
             }
             
+            
         }.resume()
         
+        
     }
-    
     
     //MARK:METODO PARA IR AL SIGUIENTE CONTROLADOR
     func siguiente(){

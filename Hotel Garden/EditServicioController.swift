@@ -365,14 +365,13 @@ class EditServicioViewController: UITableViewController,UIPickerViewDataSource, 
             
             var request = URLRequest(url: URL(string: "\(HttpRuta.ruta)/clients/\(clientId)/maintenances/\(idSolicitud)")!)
             
-           // print("http://localhost:8000/api/clients/\(clientId)/solicitudes/\(idSolicitud)")
-            
             
             request.httpMethod = "PUT"
             request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "content-type")
             let postString = "location_id=\(lugar_id)&descripcion_mant=\(descripPut)"
-            request.httpBody = postString.data(using: .ascii)
+            request.httpBody = postString.data(using: .utf8)
 
+            print(postString)
             
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
                 guard let data = data, error == nil else {

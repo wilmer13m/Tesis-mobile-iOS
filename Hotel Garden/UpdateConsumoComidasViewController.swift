@@ -38,7 +38,7 @@ class UpdateConsumoComidasViewController: UITableViewController {
         tableView.setEditing(true, animated: false)
         
         //SETTING NAVBAR
-        navigationItem.title = "Editando orden(1/3)"
+        navigationItem.title = "Editando orden(1/4)"
         navigationController?.navigationBar.tintColor = .white
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named:"arrow"), style: .plain, target: self, action: #selector(self.siguiente))
         
@@ -154,12 +154,12 @@ class UpdateConsumoComidasViewController: UITableViewController {
         
         if let myCell = cell as? FormularioConsumoTableViewCell  {
         
-            for x in foodOrder.details{
+            for x in foodOrder.articles{
                 
-                if x.product_id == productos![indexPath.row].id{
+                if x.descripcion_prod == productos![indexPath.row].nombre{
                     tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
                     
-                    myCell.cantidadLabel.text = "Cant: \(x.cantidad)"
+                    myCell.cantidadLabel.text = "Cant: \(x.cantidad_prod)"
                     currentOrder.append((productos![indexPath.row], myCell.cantidadLabel.text!))
 
                 }
@@ -179,7 +179,7 @@ class UpdateConsumoComidasViewController: UITableViewController {
     //MARK:FETCHING DATA
     func fetchingComidas(){
         
-      //  print("entre al fetching")
+        print("entre al fetching")
         
         mensajeError.hideElements()
         loadingView.showMenuLoad()
@@ -187,7 +187,7 @@ class UpdateConsumoComidasViewController: UITableViewController {
         
         let url = URL(string: "\(HttpRuta.ruta)/products")
         
-       // print(url!)
+        print(url!)
         
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -196,7 +196,7 @@ class UpdateConsumoComidasViewController: UITableViewController {
         URLSession.shared.dataTask(with: url!) {(data, response, error) in
             
             guard data != nil else {
-               // print("error de data: \(error!)")
+                print("error de data: \(error!)")
                 
                 DispatchQueue.main.async(execute: {
                     
@@ -210,11 +210,18 @@ class UpdateConsumoComidasViewController: UITableViewController {
                         
                         if self.productos?.count == nil{
                             //run your function here
+                            DispatchQueue.main.async(execute: {
+                                self.tableView.reloadData()
+                                self.loadingView.hideLoadingView()
+                                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                                self.mensajeError.showElements()
+                                self.mensajeError.showView()
+                                self.mensajeError.reloadButton.addTarget(self, action: #selector(self.reloadData), for: .touchDown)
+                                self.tableView.isHidden = true
+                                
+                            })
                             
-                            self.mensajeError.showElements()
-                            self.mensajeError.showView()
-                            self.mensajeError.reloadButton.addTarget(self, action: #selector(self.reloadData), for: .touchDown)
-                            self.tableView.isHidden = true
+                            
                         }
                     }))
                     
@@ -243,7 +250,7 @@ class UpdateConsumoComidasViewController: UITableViewController {
                         
                         let tipo = prod["tipo"] as! String
                         
-                        if tipo == "B"{
+                        if tipo == "1"{
                             
                             producto.id = prod["id"] as! Int
                             producto.nombre = prod["nombre"] as! String
@@ -256,7 +263,6 @@ class UpdateConsumoComidasViewController: UITableViewController {
                     
                     //recargo la data del collectionView de manera asincrona
                     DispatchQueue.main.async(execute: {
-
                         self.tableView.reloadData()
                         self.loadingView.hideLoadingView()
                         UIApplication.shared.isNetworkActivityIndicatorVisible = false
@@ -283,7 +289,7 @@ class UpdateConsumoComidasViewController: UITableViewController {
         
         
     }
-    
+
     
     //MARK:METODO PARA IR AL SIGUIENTE FORMULARIO
     func siguiente(){

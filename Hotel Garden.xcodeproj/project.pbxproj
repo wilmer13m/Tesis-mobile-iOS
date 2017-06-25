@@ -18,6 +18,7 @@
 		A50C803B1EF9AD7000A03D31 /* ConsumosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C803A1EF9AD7000A03D31 /* ConsumosTableViewController.swift */; };
 		A50C803D1EF9C0E200A03D31 /* ArticleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C803C1EF9C0E200A03D31 /* ArticleList.swift */; };
 		A50C803F1EF9E2B400A03D31 /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C803E1EF9E2B400A03D31 /* Operation.swift */; };
+		A50C80411EFA374A00A03D31 /* ConsumoPutLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50C80401EFA374A00A03D31 /* ConsumoPutLocationViewController.swift */; };
 		A51469831EF7439700220094 /* UpdateConsumoComidasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51469821EF7439700220094 /* UpdateConsumoComidasViewController.swift */; };
 		A51469851EF7547100220094 /* updateConsumoBebidasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51469841EF7547100220094 /* updateConsumoBebidasViewController.swift */; };
 		A51469871EF757F100220094 /* UpdateConsumoPostresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51469861EF757F100220094 /* UpdateConsumoPostresViewController.swift */; };
@@ -54,9 +55,12 @@
 		A5C159F21EF1F71100AD6E01 /* OrderConsumoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C159F11EF1F71100AD6E01 /* OrderConsumoTableViewCell.swift */; };
 		A5C159F41EF1FD8D00AD6E01 /* DetailServiciosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C159F31EF1FD8D00AD6E01 /* DetailServiciosViewController.swift */; };
 		A5C159F61EF201D500AD6E01 /* DetailServicioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C159F51EF201D500AD6E01 /* DetailServicioTableViewCell.swift */; };
+		A5DF30B91EFFFB2D00D4BD85 /* CambiarPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DF30B81EFFFB2D00D4BD85 /* CambiarPasswordViewController.swift */; };
+		A5DF30BB1EFFFD3900D4BD85 /* CambiarPasswordCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DF30BA1EFFFD3900D4BD85 /* CambiarPasswordCellTableViewCell.swift */; };
 		A5E073381EE3D8EE0098A2A8 /* Solicitud.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E073371EE3D8EE0098A2A8 /* Solicitud.swift */; };
 		A5E0733A1EE3E3DD0098A2A8 /* MantenimientoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E073391EE3E3DD0098A2A8 /* MantenimientoTableViewCell.swift */; };
 		A5E0733C1EE3E8BF0098A2A8 /* CreateServicioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E0733B1EE3E8BF0098A2A8 /* CreateServicioViewController.swift */; };
+		A5FA0CAD1EFAD850006FCC2C /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FA0CAC1EFAD850006FCC2C /* Client.swift */; };
 		A5FCB7641EE718350041A8C8 /* EditServicioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FCB7631EE718350041A8C8 /* EditServicioController.swift */; };
 		B705F0F9234F6C3FA8AE672B /* Pods_Hotel_Garden.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54F8E4D2C57BFB692459994B /* Pods_Hotel_Garden.framework */; };
 		D5DAE3DDF5281238DA85F672 /* Pods_Hotel_GardenTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE0864E2D8EB5E681D8474C /* Pods_Hotel_GardenTests.framework */; };
@@ -95,6 +99,7 @@
 		A50C803A1EF9AD7000A03D31 /* ConsumosTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsumosTableViewController.swift; sourceTree = "<group>"; };
 		A50C803C1EF9C0E200A03D31 /* ArticleList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleList.swift; sourceTree = "<group>"; };
 		A50C803E1EF9E2B400A03D31 /* Operation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
+		A50C80401EFA374A00A03D31 /* ConsumoPutLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsumoPutLocationViewController.swift; sourceTree = "<group>"; };
 		A51469821EF7439700220094 /* UpdateConsumoComidasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateConsumoComidasViewController.swift; sourceTree = "<group>"; };
 		A51469841EF7547100220094 /* updateConsumoBebidasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = updateConsumoBebidasViewController.swift; sourceTree = "<group>"; };
 		A51469861EF757F100220094 /* UpdateConsumoPostresViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateConsumoPostresViewController.swift; sourceTree = "<group>"; };
@@ -137,9 +142,12 @@
 		A5C159F11EF1F71100AD6E01 /* OrderConsumoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderConsumoTableViewCell.swift; sourceTree = "<group>"; };
 		A5C159F31EF1FD8D00AD6E01 /* DetailServiciosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailServiciosViewController.swift; sourceTree = "<group>"; };
 		A5C159F51EF201D500AD6E01 /* DetailServicioTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailServicioTableViewCell.swift; sourceTree = "<group>"; };
+		A5DF30B81EFFFB2D00D4BD85 /* CambiarPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CambiarPasswordViewController.swift; sourceTree = "<group>"; };
+		A5DF30BA1EFFFD3900D4BD85 /* CambiarPasswordCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CambiarPasswordCellTableViewCell.swift; sourceTree = "<group>"; };
 		A5E073371EE3D8EE0098A2A8 /* Solicitud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Solicitud.swift; sourceTree = "<group>"; };
 		A5E073391EE3E3DD0098A2A8 /* MantenimientoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MantenimientoTableViewCell.swift; sourceTree = "<group>"; };
 		A5E0733B1EE3E8BF0098A2A8 /* CreateServicioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateServicioViewController.swift; sourceTree = "<group>"; };
+		A5FA0CAC1EFAD850006FCC2C /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		A5FCB7631EE718350041A8C8 /* EditServicioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditServicioController.swift; sourceTree = "<group>"; };
 		AA1CF9D0D81533390B468A25 /* Pods_Hotel_GardenUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hotel_GardenUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF643CEB88B3AD86752F97E2 /* Pods-Hotel GardenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hotel GardenUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Hotel GardenUITests/Pods-Hotel GardenUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -202,6 +210,7 @@
 				A5E073371EE3D8EE0098A2A8 /* Solicitud.swift */,
 				A50C80381EF8A1C500A03D31 /* Reservation.swift */,
 				A50C803E1EF9E2B400A03D31 /* Operation.swift */,
+				A5FA0CAC1EFAD850006FCC2C /* Client.swift */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -209,6 +218,7 @@
 		A509F04A1EDA017F00F8AC5D /* views */ = {
 			isa = PBXGroup;
 			children = (
+				A5DF30BA1EFFFD3900D4BD85 /* CambiarPasswordCellTableViewCell.swift */,
 				A529F7351EDD19C80054BA57 /* DetailConsumoTableViewCell.swift */,
 				A5C159F51EF201D500AD6E01 /* DetailServicioTableViewCell.swift */,
 				A562FA2C1EE4EDD000DDE9B0 /* FormularioServicioTableViewCell.swift */,
@@ -226,6 +236,7 @@
 		A509F04B1EDA018E00F8AC5D /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A5DF30B81EFFFB2D00D4BD85 /* CambiarPasswordViewController.swift */,
 				A529F72D1EDB8B1A0054BA57 /* ConsumosViewController.swift */,
 				A50C803A1EF9AD7000A03D31 /* ConsumosTableViewController.swift */,
 				A5C159E91EF1AD0300AD6E01 /* CreateConsumoViewController.swift */,
@@ -245,6 +256,7 @@
 				A51469821EF7439700220094 /* UpdateConsumoComidasViewController.swift */,
 				A51469841EF7547100220094 /* updateConsumoBebidasViewController.swift */,
 				A51469861EF757F100220094 /* UpdateConsumoPostresViewController.swift */,
+				A50C80401EFA374A00A03D31 /* ConsumoPutLocationViewController.swift */,
 			);
 			name = controllers;
 			sourceTree = "<group>";
@@ -614,9 +626,11 @@
 				A5E073381EE3D8EE0098A2A8 /* Solicitud.swift in Sources */,
 				A5C159F21EF1F71100AD6E01 /* OrderConsumoTableViewCell.swift in Sources */,
 				A51469851EF7547100220094 /* updateConsumoBebidasViewController.swift in Sources */,
+				A50C80411EFA374A00A03D31 /* ConsumoPutLocationViewController.swift in Sources */,
 				A5C159F61EF201D500AD6E01 /* DetailServicioTableViewCell.swift in Sources */,
 				A529F7361EDD19C80054BA57 /* DetailConsumoTableViewCell.swift in Sources */,
 				A509F0581EDA3E5600F8AC5D /* LoginViewController.swift in Sources */,
+				A5DF30BB1EFFFD3900D4BD85 /* CambiarPasswordCellTableViewCell.swift in Sources */,
 				A55896EC1EF502BA00660BC3 /* Details.swift in Sources */,
 				A562F27E1EE4CD8A008FEBF3 /* MensajeError.swift in Sources */,
 				A5FCB7641EE718350041A8C8 /* EditServicioController.swift in Sources */,
@@ -632,6 +646,7 @@
 				A5ABF8461ED9306F003FA132 /* AppDelegate.swift in Sources */,
 				A5C159EC1EF1C74A00AD6E01 /* CreateConsumoBebidasViewController.swift in Sources */,
 				A529F72E1EDB8B1A0054BA57 /* ConsumosViewController.swift in Sources */,
+				A5DF30B91EFFFB2D00D4BD85 /* CambiarPasswordViewController.swift in Sources */,
 				A536E8851EE66AED001E59F2 /* SweetAlert.swift in Sources */,
 				A50C803F1EF9E2B400A03D31 /* Operation.swift in Sources */,
 				A58B314D1EF0D66A0079A2D8 /* FormularioConsumoTableViewCell.swift in Sources */,
@@ -649,6 +664,7 @@
 				A5ABF84E1ED9306F003FA132 /* Hotel_Garden.xcdatamodeld in Sources */,
 				A5C159F41EF1FD8D00AD6E01 /* DetailServiciosViewController.swift in Sources */,
 				A55896EE1EF5038C00660BC3 /* Order.swift in Sources */,
+				A5FA0CAD1EFAD850006FCC2C /* Client.swift in Sources */,
 				A5C159EA1EF1AD0300AD6E01 /* CreateConsumoViewController.swift in Sources */,
 				A509F05A1EDA468D00F8AC5D /* LoginView.swift in Sources */,
 				A509F04E1EDA01B500F8AC5D /* helpers.swift in Sources */,

@@ -20,7 +20,7 @@ class HomeViewController: UITableViewController {
     var header : StretchHeader!
 
     let settings: [Setting] = {
-        return [Setting(name: "Consumos",imageName : "servicios",color: UIColor.azul(),descripcion: "Revise sus consumos aqui"),Setting(name: "Servicios",imageName : "reservas",color: UIColor.verde(),descripcion:"Informacion de servicios"),Setting(name: "Galeria",imageName : "galeria",color: UIColor.morado(),descripcion:"conozca nuestras instalaciones")]
+        return [Setting(name: "Consumos",imageName : "servicios",color: UIColor.azul(),descripcion: "Revise sus consumos aqui"),Setting(name: "Servicios",imageName : "reservas",color: UIColor.verde(),descripcion:"Información de servicios"),Setting(name: "Galeria",imageName : "galeria",color: UIColor.morado(),descripcion:"conozca nuestras instalaciones")]
     }()
     
     
@@ -34,7 +34,7 @@ class HomeViewController: UITableViewController {
         tableView.separatorStyle = .none
         
         tableView.register(HomeTableViewCell1.self, forCellReuseIdentifier: cellId1)
-       // tableView.register(HomeTableViewCell2.self, forCellReuseIdentifier: cellId2)
+        tableView.register(HomeTableViewCell2.self, forCellReuseIdentifier: cellId2)
         
        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named:"logout")?.withRenderingMode(.alwaysTemplate) , style: .done, target: self, action: #selector(self.logOut))
         navigationItem.rightBarButtonItem?.tintColor = UIColor.white
@@ -75,21 +75,36 @@ class HomeViewController: UITableViewController {
     
     //MARK: TABLEVIEW METHODS DELEGATES
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return settings.count
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell1 = tableView.dequeueReusableCell(withIdentifier: cellId1) as! HomeTableViewCell1
+        let cell2 = tableView.dequeueReusableCell(withIdentifier: cellId2) as! HomeTableViewCell2
         
+        if indexPath.row != 3{
             cell1.setting = settings[indexPath.row]
             return cell1
+            
+        }
+        else{
+            
+            cell2.iconImageView.isUserInteractionEnabled = true
+            cell2.iconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.irCambiarPassword)))
+           return cell2
+        }
     }
     
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return 80
+        if indexPath.row != 3{
+            return 80
+        }else{
+        
+            return 40
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -152,7 +167,7 @@ class HomeViewController: UITableViewController {
     //MARK: METODO PARA DESLOGUEARSE
     func logOut(){
     
-        let alertController = UIAlertController(title: "Logout", message: "¿Esta seguro que desea cerrar sesion?", preferredStyle: UIAlertControllerStyle.alert)
+        let alertController = UIAlertController(title: "Logout", message: "¿Esta seguro que desea cerrar sesión?", preferredStyle: UIAlertControllerStyle.alert)
         
         let okAction = UIAlertAction(title: "Ok", style: .destructive) {
             (result : UIAlertAction) -> Void in
@@ -176,6 +191,16 @@ class HomeViewController: UITableViewController {
     
     }
 
+    
+    func irCambiarPassword(){
+    
+        let vc = CambiarPasswordViewController(style: .plain)
+        navigationController?.pushViewController(vc, animated: true)
+        
+        print("toque la tuerca")
+        
+    
+    }
 
 
 }

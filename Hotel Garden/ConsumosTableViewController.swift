@@ -193,7 +193,7 @@ class ConsumosTableViewController: UITableViewController {
             
             print(status)
             
-            if status != "Por procesar"{
+            if status != "1"{
                 
                 DispatchQueue.main.async(execute: {
                     
@@ -508,7 +508,7 @@ class ConsumosTableViewController: UITableViewController {
             DispatchQueue.main.async(execute: {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 self.loadingView.hideLoadingView()
-                _ = self.sweetAlert.showAlert("Completado!", subTitle: "Su orden de mantenimiento ha sido borrada con exito", style: AlertStyle.success)
+                _ = self.sweetAlert.showAlert("Completado!", subTitle: "Su orden de consumo ha sido borrada con exito", style: AlertStyle.success)
                 
                 let responseString = String(data: data, encoding: .utf8)
                 print("responseString = \(responseString!)")
